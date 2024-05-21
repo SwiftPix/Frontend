@@ -9,8 +9,8 @@ const styles = StyleSheet.create({
   },
   headerImg: {
     resizeMode: 'contain',
-    width: 130,
-    height: 65,
+    width: 80,
+    height: 80,
     top: '3%',
     left: '0%',
     position: 'absolute',

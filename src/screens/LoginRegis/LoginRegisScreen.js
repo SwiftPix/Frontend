@@ -3,7 +3,7 @@ import React from 'react';
 import { SafeAreaView, Text, Image, TouchableOpacity } from 'react-native';
 import styles from './styles';
 
-import logo from '../../../assets/rigelLogo2.png';
+import logo from '../../../assets/appIcon.png';
 
 // Interface
 const LoginRegisScreen = ({ navigation }) => {

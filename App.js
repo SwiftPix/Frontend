@@ -14,6 +14,12 @@ import { createStackNavigator } from '@react-navigation/stack';
 
 // Screens imports
 import OnboardingScreen from './src/screens/Onboarding/OnboardingScreen';
+import LoginRegisScreen from './src/screens/LoginRegis/LoginRegisScreen';
+import LoginScreen from './src/screens/LoginScreen/LoginScreen';
+import HomeScreen from './src/screens/Home/homeScreen';
+import LoadingScreen from './src/screens/loading/loadingScreen';
+import LoadingAppScreen from './src/screens/loadingApp/loadingAppScreen';
+import DocChoiceScreen from './src/screens/documentChoice/documentChoiceScreen';
 import FinishRegister from './src/screens/finishRegister/finishRegisterScreen';
 
 
@@ -31,7 +37,7 @@ const App = () => {
   return (
     <NavigationContainer>
       
-          <AppStack.Navigator
+      <AppStack.Navigator
             headerModel="none"
             screenOptions={{
               headerTintColor: '#fff',
@@ -49,6 +55,50 @@ const App = () => {
               name="Onboarding"
               component={OnboardingScreen}
               options={{ headerShown: false }}
+            />
+
+            <AppStack.Screen
+              name="LoginRegis"
+              component={LoginRegisScreen}
+              options={{ headerShown: false }}
+            />
+            <AppStack.Screen
+              name="LoginScreen"
+              component={LoginScreen}
+              options={{ headerShown: false }}
+            />
+            <AppStack.Screen
+              name="HomeScreen"
+              component={HomeScreen}
+              options={{ headerShown: false }}
+            />
+            <AppStack.Screen
+              name="LoadingScreen"
+              component={LoadingScreen}
+              options={{
+                headerShown: false,
+              }}
+            />
+            <AppStack.Screen
+              name="LoadingAppScreen"
+              component={LoadingAppScreen}
+              options={{
+                headerShown: false,
+              }}
+            />
+             <AppStack.Screen
+              name="DocChoiceScreen"
+              component={DocChoiceScreen}
+              options={{
+                headerShown: false,
+              }}
+            />
+            <AppStack.Screen
+              name="FinishRegister"
+              component={FinishRegister}
+              options={{
+                headerShown: false,
+              }}
             />
           </AppStack.Navigator>
     </NavigationContainer>

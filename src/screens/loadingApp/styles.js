@@ -8,8 +8,8 @@ const styles = StyleSheet.create({
     backgroundColor: '#F4F4F4',
   },
   logo: {
-    width: 150,
-    height: 150,
+    width: 60,
+    height: 60,
     resizeMode: 'contain',
   },
   byIbmContent: {
@@ -18,13 +18,13 @@ const styles = StyleSheet.create({
   },
   textBy: {
     fontFamily: 'ibmRegular',
-    color: '#4589FF',
+    color: '#00A896',
     fontSize: 26,
     marginRight: 5,
   },
   textIbm: {
     fontFamily: 'boldIBM',
-    color: '#4589FF',
+    color: '#00A896',
     fontSize: 26,
   },
 });

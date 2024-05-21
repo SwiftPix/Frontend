@@ -9,7 +9,7 @@ const styles = StyleSheet.create({
   },
   headerImg: {
     resizeMode: 'contain',
-    width: 130,
+    width: 60,
     height: 65,
     top: '3%',
     left: '0%',

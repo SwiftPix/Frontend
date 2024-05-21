@@ -17,7 +17,7 @@ import KeyboardAvoidingWrapper from '../../components/KeyboardWrapper';
 // Import User Context
 import { UserContext } from '../../context/userContext';
 
-import logo from '../../../assets/appIcon.png';
+import logo from '../../../assets/logoTop.png';
 
 // Interface
 const LoginScreen = ({ navigation }) => {
