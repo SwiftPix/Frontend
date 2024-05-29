@@ -9,11 +9,11 @@ const styles = StyleSheet.create({
   },
   headerImg: {
     resizeMode: 'contain',
-    width: 80,
-    height: 80,
-    top: '3%',
+    width: 100,
+    height: 100,
     left: '0%',
-    position: 'absolute',
+    position: 'center',
+    top: '-15%',
   },
   guideText: {
     color: '#000',
