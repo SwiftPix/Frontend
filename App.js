@@ -21,7 +21,7 @@ import LoadingScreen from './src/screens/loading/loadingScreen';
 import LoadingAppScreen from './src/screens/loadingApp/loadingAppScreen';
 import DocChoiceScreen from './src/screens/documentChoice/documentChoiceScreen';
 import FinishRegister from './src/screens/finishRegister/finishRegisterScreen';
-
+import BiometricScreen from './src/screens/biometric/biometricScreen';
 
 const AppStack = createStackNavigator();
 
@@ -51,6 +51,13 @@ const App = () => {
               headerTitleAlign: 'center',
             }}
           >
+            <AppStack.Screen
+              name="Biometrics"
+              component={BiometricScreen}
+              options={{
+                headerShown: false,
+              }}
+            />
             <AppStack.Screen
               name="Onboarding"
               component={OnboardingScreen}
