@@ -15,12 +15,13 @@ const LoadingScreen = () => {
         size={60}
         color="#4589FF"
         style={styles.loadingIcon}
+        testID="activity-indicator"
       />
       <View style={styles.loadingContent}>
         <Text style={styles.loadingText}>Carregando</Text>
         <Loader speed={400} color="#4589FF" />
       </View>
-      <Image style={styles.logo} source={logo} />
+      <Image style={styles.logo} source={logo} testID='logo-image'/>
     </SafeAreaView>
   );
 };
