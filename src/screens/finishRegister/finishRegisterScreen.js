@@ -44,7 +44,7 @@ const FinishRegister = ({ navigation }) => {
           setData={setData}
         />
       </Modal>
-      <Image style={styles.headerImg} source={logo} />
+      <Image style={styles.headerImg} source={logo} testID='logoTop'/>
       <Text style={styles.title}>
         Parabéns! Você concluiu todas as etapas e seus dados já estão sendo
         analisados
@@ -57,7 +57,7 @@ const FinishRegister = ({ navigation }) => {
         você receberá um e-mail com os seus dados de acesso ou solicitações de
         documentos.
       </Text>
-      <Image style={styles.imgFinishArt} source={finishArt} />
+      <Image style={styles.imgFinishArt} source={finishArt} testID='finishArt' />
       <TouchableOpacity style={styles.buttonHelp}>
         <Text style={styles.textHelp}>Ajuda</Text>
         <Icon
