@@ -67,14 +67,14 @@ const HomeScreen = ({ navigation }) => {
       <View style={styles.header}>
         <View style={styles.headerImages}>
           <TouchableOpacity>
-            <Image style={styles.iconHeader} source={iconNotification} />
+            <Image style={styles.iconHeader} source={iconNotification} testID='NotificationIcon'/>
           </TouchableOpacity>
 
           <TouchableOpacity>
-            <Image style={styles.iconHeader} source={iconSettings} />
+            <Image style={styles.iconHeader} source={iconSettings} testID='SettingsIcon'/>
           </TouchableOpacity>
           <TouchableOpacity>
-            <Image style={styles.iconHeader} source={iconUser} />
+            <Image style={styles.iconHeader} source={iconUser} testID='UserIcon' />
           </TouchableOpacity>
         </View>
         <Text style={styles.headerText}>Olá, usuário {context.id}</Text>
