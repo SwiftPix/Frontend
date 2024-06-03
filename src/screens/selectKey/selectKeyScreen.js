@@ -12,6 +12,7 @@ import { TextInputMask } from 'react-native-masked-text';
 import Icon from 'react-native-vector-icons/FontAwesome5';
 import Accordion from 'react-native-accordion-wrapper';
 import logo from '../../../assets/logoTop.png';
+import CountryPickerModal from 'react-native-country-picker-modal';
 
 // Import Styles
 import styles from './styles';
@@ -33,6 +34,7 @@ const SelectKeyScreen = ({ navigation }) => {
   const context = useContext(TransctionContext);
   const [cpf, onChangeText] = useState('');
   const [cell, onChangeText1] = useState('');
+  const [selectedCountry, setSelectedCountry] = useState(null);
 
   const getKey = () => {
     keysApi
@@ -115,8 +117,20 @@ const SelectKeyScreen = ({ navigation }) => {
                   ),
                 },
               ]}
+
+              
             />
+
+               
           </View>
+           <Text style={styles.selectTitle}>Selecionar País onde você está:</Text>
+            <CountryPickerModal style={styles.selectCountry}
+              visible
+              withFilter
+              onSelect={(country) => setSelectedCountry(country)}
+              countryCode={selectedCountry?.cca2}
+              withCountryNameButton
+            />
         </View>
         {/* <TouchableOpacity style={styles.qrcodeContainer}>
           <Image style={styles.qrcode} source={iconQRCode} />

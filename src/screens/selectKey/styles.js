@@ -89,5 +89,8 @@ const styles = StyleSheet.create({
     left: '43%',
     position: 'absolute',
   },
+  selectCountry: {
+    alignSelf: 'center',
+  }
 });
 export default styles;
