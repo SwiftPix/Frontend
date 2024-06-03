@@ -3,32 +3,25 @@ import { StyleSheet } from 'react-native';
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center',
     backgroundColor: '#FAFBFE',
   },
   headerImg: {
     resizeMode: 'contain',
-    width: 80,
-    height: 80,
-    top: '3%',
-    left: '0%',
+    width: 60,
+    height: 60,
+    top: '5%',
+    left: '40%',
     position: 'absolute',
   },
   guideText: {
     color: '#000',
     fontFamily: 'boldIBM',
-    fontSize: 34,
-    textAlign: 'left',
-    top: '-10%',
+    fontSize: 20,
+    textAlign: 'center',
+    top: '6%',
+    marginBottom: 15,
   },
-  description: {
-    color: '#6C6C6C',
-    fontFamily: 'ibmRegular',
-    fontSize: 18,
-    textAlign: 'left',
-    top: '-5%',
-  },
+
   subtitle: {
     color: '#000',
     fontFamily: 'boldIBM',
@@ -40,13 +33,7 @@ const styles = StyleSheet.create({
     left: '-23%',
     top: '3%',
   },
-  typeDocument: {
-    color: '#000',
-    fontFamily: 'ibmRegular',
-    fontSize: 18,
-    textAlign: 'left',
-    top: '2%',
-  },
+
   buttonNext: {
     alignSelf: 'center',
     width: '85%',
@@ -65,6 +52,7 @@ const styles = StyleSheet.create({
   buttonBack: {
     flexDirection: 'row',
     bottom: '-32%',
+    marginLeft: '40%',
   },
   textBack: {
     fontSize: 18,
@@ -72,6 +60,27 @@ const styles = StyleSheet.create({
     color: '#000',
     textAlign: 'center',
     marginLeft: 8,
+  },
+  registerText: {
+    fontFamily: 'boldIBM',
+    fontSize: 20,
+    color: '#000000',
+    marginTop: 50,
+    marginBottom: 10,
+    marginLeft: 35,
+  },
+  input: {
+    height: 40,
+    width: '80%',
+    borderWidth: 1,
+    borderRadius: 13,
+    backgroundColor: '#ffffff',
+    borderColor: '#00A896',
+    marginVertical: 1,
+    marginLeft: 35,
+    color: '#000000',
+    fontSize: 18,
+    fontFamily: 'ibmRegular',
   },
 });
 

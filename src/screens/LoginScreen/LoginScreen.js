@@ -36,14 +36,14 @@ const LoginScreen = ({ navigation }) => {
           <Text style={styles.loginText}>CPF:</Text>
           <TextInputMask
             type="cpf"
-            value={cpf}
+            //value={cpf}
             keyboardType="numeric"
             style={styles.input}
             onChangeText={(text) => onChangeText(text)}
           />
           <Text style={styles.loginText}>Senha:</Text>
           <TextInput
-            value={password}
+            //value={password}
             style={styles.input}
             secureTextEntry
             onChangeNumber={(text) => onChangeNumber(text)}

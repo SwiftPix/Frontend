@@ -19,7 +19,7 @@ const styles = StyleSheet.create({
     padding: 15,
     flex: 0.7,
     height: '100%',
-    width: '85%',
+    width: '100%',
     borderRadius: 10,
     justifyContent: 'space-around',
   },

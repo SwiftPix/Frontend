@@ -51,13 +51,7 @@ const App = () => {
               headerTitleAlign: 'center',
             }}
           >
-            <AppStack.Screen
-              name="Biometrics"
-              component={BiometricScreen}
-              options={{
-                headerShown: false,
-              }}
-            />
+            
             <AppStack.Screen
               name="Onboarding"
               component={OnboardingScreen}
@@ -68,6 +62,14 @@ const App = () => {
               name="LoginRegis"
               component={LoginRegisScreen}
               options={{ headerShown: false }}
+            />
+
+            <AppStack.Screen
+              name="Biometrics"
+              component={BiometricScreen}
+              options={{
+                headerShown: false,
+              }}
             />
             <AppStack.Screen
               name="LoginScreen"

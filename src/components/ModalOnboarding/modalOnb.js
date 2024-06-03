@@ -53,7 +53,7 @@ const ModalOnboarding = (props) => {
           {' '}
           Tenha em mãos seu documento de identidade(RG,CNH ou RNE).
         </Text>
-        <Text style={styles.alert}>Você precisará dele mais adiante.</Text>
+        <Text style={styles.alert}>Você precisará dele mais adiante para cadastrar seus dados.</Text>
 
         <TouchableOpacity
           style={styles.doneButton}

@@ -2,6 +2,7 @@ import { CameraView, takePictureAsync, useCameraPermissions } from 'expo-camera'
 import { useState } from 'react';
 import { Button, Image, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
 import styles from './styles';
+import cameraButton from '../../../assets/cameraButton.png'
 
 function BiometricScreen() {
   const facing = 'front';
@@ -37,7 +38,7 @@ function BiometricScreen() {
       <CameraView style={styles.camera} facing={facing} ref={(ref) => { setCameraRef(ref) }}>
         <View style={styles.buttonContainer}>
           <TouchableOpacity style={styles.button} onPress={() => this.takePicture()}>
-            <Text style={styles.text}>Tirar foto</Text>
+            <Image style={styles.cameraButton} source={cameraButton} />
           </TouchableOpacity>
         </View>
       </CameraView>
