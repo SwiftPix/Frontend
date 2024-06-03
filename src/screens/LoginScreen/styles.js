@@ -2,13 +2,14 @@ import { StyleSheet } from 'react-native';
 
 const styles = StyleSheet.create({
   container: {
-    flex: 1,
+    flex: 0.9,
     alignItems: 'center',
     backgroundColor: '#f4f4f4',
   },
   logo: {
     top: '-5%',
     width: 60,
+    height: 60,
     alignSelf: 'center',
     resizeMode: 'contain',
     flex: 0.5,
@@ -43,7 +44,7 @@ const styles = StyleSheet.create({
   loginText: {
     fontFamily: 'boldIBM',
     fontSize: 20,
-    color: '#00A896',
+    color: '#000000',
     marginTop: 20,
     marginBottom: 15,
   },

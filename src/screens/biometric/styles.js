@@ -22,6 +22,16 @@ const styles = StyleSheet.create({
   cameraButton: {
 
   },
+  doneButton: {
+    alignSelf: 'center',
+    width: '85%',
+    backgroundColor: '#00A896',
+    paddingHorizontal: 0,
+    paddingVertical: 15,
+    borderRadius: 16,
+    bottom: '-13%',
+  },
+  
 });
 
 export default styles;

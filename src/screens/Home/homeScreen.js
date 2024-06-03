@@ -34,27 +34,27 @@ const HomeScreen = ({ navigation }) => {
   const [transactions, setTransactions] = useState('');
   const isFocused = useIsFocused();
 
-  useEffect(() => {
-    balanceApi
-      .get(`/${context.id}`)
-      .then((res) => {
-        setBalance(res.data.BALANCECUSTOMER);
-        context.setBalance(res.data.BALANCECUSTOMER);
-        console.log(res.data);
-      })
-      .catch((err) => {
-        console.log(err);
-      });
-    balanceApi
-      .get(`/transactions/latest/${context.id}`)
-      .then((res) => {
-        setTransactions(res.data);
-        console.log(res.data);
-      })
-      .catch((err) => {
-        console.log(err);
-      });
-  }, [isFocused]);
+  // useEffect(() => {
+  //   balanceApi
+  //     .get(`/${context.id}`)
+  //     .then((res) => {
+  //       setBalance(res.data.BALANCECUSTOMER);
+  //       context.setBalance(res.data.BALANCECUSTOMER);
+  //       console.log(res.data);
+  //     })
+  //     .catch((err) => {
+  //       console.log(err);
+  //     });
+  //   balanceApi
+  //     .get(`/transactions/latest/${context.id}`)
+  //     .then((res) => {
+  //       setTransactions(res.data);
+  //       console.log(res.data);
+  //     })
+  //     .catch((err) => {
+  //       console.log(err);
+  //     });
+  // }, [isFocused]);
   const [shouldShow, setShouldShow] = useState(true);
   const functionA = () => {
     setShouldShow(!shouldShow);
@@ -77,7 +77,7 @@ const HomeScreen = ({ navigation }) => {
             <Image style={styles.iconHeader} source={iconUser} />
           </TouchableOpacity>
         </View>
-        <Text style={styles.headerText}>Olá, usuário {context.id}</Text>
+        <Text style={styles.headerText}>Olá, usuário //context.id</Text>
       </View>
       <View style={styles.body}>
         <View style={styles.list}>
@@ -147,7 +147,7 @@ const HomeScreen = ({ navigation }) => {
             </>
           )}
 
-          <TouchableOpacity
+          {/* <TouchableOpacity
             onPress={() => navigation.navigate('StatementScreen')}
             style={styles.statementButton}
           >
@@ -158,7 +158,7 @@ const HomeScreen = ({ navigation }) => {
               color="#414141"
               style={styles.iconNext}
             />
-          </TouchableOpacity>
+          </TouchableOpacity> */}
         </View>
         <View style={styles.buttons}>
           <TouchableOpacity
@@ -170,7 +170,7 @@ const HomeScreen = ({ navigation }) => {
           </TouchableOpacity>
           <View style={styles.btnContainer}>
             <View style={styles.btnRows}>
-              <TouchableOpacity style={styles.btnKeys}>
+              {/* <TouchableOpacity style={styles.btnKeys}>
                 <Image style={styles.logo} source={iconKey} />
                 <Text style={styles.textKeys}>Minhas chaves</Text>
               </TouchableOpacity>
@@ -179,7 +179,7 @@ const HomeScreen = ({ navigation }) => {
               <TouchableOpacity style={styles.btnKeys}>
                 <Image style={styles.logo} source={iconCrow} />
                 <Text style={styles.textKeys}>Meus favoritos</Text>
-              </TouchableOpacity>
+              </TouchableOpacity> */}
             </View>
           </View>
         </View>

@@ -12,8 +12,10 @@ import {
 import { RadioButton } from 'react-native-paper';
 import Icon from 'react-native-vector-icons/FontAwesome5';
 import styles from './styles';
-import { TextInput } from 'react-native-gesture-handler';
+import { ScrollView, TextInput } from 'react-native-gesture-handler';
 import { TextInputMask } from 'react-native-masked-text';
+import { useNavigation } from '@react-navigation/native';
+
 
 // Import Component
 import ModalDocumentChoice from '../../components/modalDocumentChoice/modalDocumentChoice';
@@ -26,7 +28,8 @@ const DocChoiceScreen = ({ navigation }) => {
   const [isModalVisible, setisModalVisible] = useState(false);
   const [chooseData, setChooseData] = useState();
   const [cpf, onChangeText] = useState('');
-  const [name, onChangeName] = useState('');
+  const [celphone, onChangePhone] = useState('');
+  const [name, onChangeName] = useState(null);
   const [password, onChangeNumber] = useState(null);
 
   const changeModalVisible = (bool) => {
@@ -37,6 +40,7 @@ const DocChoiceScreen = ({ navigation }) => {
   };
   const [checked, setChecked] = useState('');
   return (
+    <ScrollView>
     <SafeAreaView style={styles.container}>
       <Image style={styles.headerImg} source={logo} />
       <Text style={styles.guideText}>
@@ -45,7 +49,7 @@ const DocChoiceScreen = ({ navigation }) => {
 
       <Text style={styles.registerText}>Nome:</Text>
           <TextInput
-            value={Text}
+            value={name}
             style={styles.input}
             onChangeNumber={(text) => onChangeName(text)}
           />
@@ -58,6 +62,14 @@ const DocChoiceScreen = ({ navigation }) => {
             style={styles.input}
             onChangeText={(text) => onChangeText(text)}
           />
+       <Text style={styles.registerText}>Celular:</Text>
+          <TextInputMask
+                type="cel-phone"
+                value={celphone}
+                keyboardType="numeric"
+                style={styles.input}
+                onChangeText={(text) => onChangePhone(text)}
+              />
       <Text style={styles.registerText}>Senha:</Text>
           <TextInput
             value={password}
@@ -89,16 +101,20 @@ const DocChoiceScreen = ({ navigation }) => {
           setData={setData}
         />
       </Modal>
-      <TouchableOpacity style={styles.buttonBack}>
-        <Icon
-          name="chevron-left"
-          size={25}
-          color="#000"
-          style={styles.iconBack}
-        />
-        <Text style={styles.textBack}>Voltar</Text>
-      </TouchableOpacity>
+      <TouchableOpacity 
+          style={styles.buttonBack} 
+          onPress={() => navigation.navigate('Onboarding')} 
+        >
+          <Icon
+            name="chevron-left"
+            size={25}
+            color="#000"
+            style={styles.iconBack}
+          />
+      <Text style={styles.textBack}>Voltar</Text>
+    </TouchableOpacity>
     </SafeAreaView>
+    </ScrollView>
   );
 };
 

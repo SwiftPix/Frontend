@@ -4,13 +4,14 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: '#FAFBFE',
+    
   },
   headerImg: {
     resizeMode: 'contain',
     width: 60,
     height: 60,
     top: '5%',
-    left: '40%',
+    left: '43%',
     position: 'absolute',
   },
   guideText: {
@@ -21,19 +22,6 @@ const styles = StyleSheet.create({
     top: '6%',
     marginBottom: 15,
   },
-
-  subtitle: {
-    color: '#000',
-    fontFamily: 'boldIBM',
-    fontSize: 20,
-    textAlign: 'left',
-    left: '-30%',
-  },
-  radioButtons: {
-    left: '-23%',
-    top: '3%',
-  },
-
   buttonNext: {
     alignSelf: 'center',
     width: '85%',
@@ -41,7 +29,7 @@ const styles = StyleSheet.create({
     paddingHorizontal: 0,
     paddingVertical: 15,
     borderRadius: 16,
-    bottom: '-13%',
+    bottom: '-5%',
   },
   textNext: {
     fontSize: 20,
@@ -51,7 +39,7 @@ const styles = StyleSheet.create({
   },
   buttonBack: {
     flexDirection: 'row',
-    bottom: '-32%',
+    bottom: '-15%',
     marginLeft: '40%',
   },
   textBack: {
@@ -66,7 +54,7 @@ const styles = StyleSheet.create({
     fontSize: 20,
     color: '#000000',
     marginTop: 50,
-    marginBottom: 10,
+    marginBottom: 2,
     marginLeft: 35,
   },
   input: {
@@ -76,7 +64,6 @@ const styles = StyleSheet.create({
     borderRadius: 13,
     backgroundColor: '#ffffff',
     borderColor: '#00A896',
-    marginVertical: 1,
     marginLeft: 35,
     color: '#000000',
     fontSize: 18,

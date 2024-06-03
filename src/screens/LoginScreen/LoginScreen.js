@@ -43,7 +43,7 @@ const LoginScreen = ({ navigation }) => {
           />
           <Text style={styles.loginText}>Senha:</Text>
           <TextInput
-            //value={password}
+            value={password}
             style={styles.input}
             secureTextEntry
             onChangeNumber={(text) => onChangeNumber(text)}
@@ -54,14 +54,14 @@ const LoginScreen = ({ navigation }) => {
           <TouchableOpacity
             style={styles.btnLogin}
             onPress={() => {
-              context.setId(cpf);
+              //context.setId(cpf);
               navigation.navigate('HomeScreen');
             }}
           >
             <Text style={styles.btnText}>Entrar</Text>
           </TouchableOpacity>
         </View>
-        <TouchableOpacity style={styles.registerBtn}>
+        <TouchableOpacity style={styles.registerBtn}  onPress={() => navigation.navigate('DocChoiceScreen')}  >
           <Text style={styles.accountText}>Ainda não possui uma conta?</Text>
           <Text style={styles.registerText}>Cadastre-se!</Text>
         </TouchableOpacity>

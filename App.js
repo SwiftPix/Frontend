@@ -22,6 +22,16 @@ import LoadingAppScreen from './src/screens/loadingApp/loadingAppScreen';
 import DocChoiceScreen from './src/screens/documentChoice/documentChoiceScreen';
 import FinishRegister from './src/screens/finishRegister/finishRegisterScreen';
 import BiometricScreen from './src/screens/biometric/biometricScreen';
+import SelectKeyScreen from './src/screens/selectKey/selectKeyScreen';
+import StatementScreen from './src/screens/statement/statementScreen';
+import ValueTransferScreen from './src/screens/valueTransfer/valueTransferScreen';
+import DataReviewScreen from './src/screens/dataReview/dataReviewScreen';
+import ReceiptScreen from './src/screens/Receipt/ReceiptScreen';
+
+
+// Context imports
+import UserProvider from './src/context/userContext';
+import TransctionProvider from './src/context/transactionContext';
 
 const AppStack = createStackNavigator();
 
@@ -65,6 +75,11 @@ const App = () => {
             />
 
             <AppStack.Screen
+              name="DataReviewScreen"
+              component={DataReviewScreen}
+              options={{ headerShown: false }}
+            />
+            <AppStack.Screen
               name="Biometrics"
               component={BiometricScreen}
               options={{
@@ -75,6 +90,13 @@ const App = () => {
               name="LoginScreen"
               component={LoginScreen}
               options={{ headerShown: false }}
+            />
+               <AppStack.Screen
+              name="FinishRegister"
+              component={FinishRegister}
+              options={{
+                headerShown: false,
+              }}
             />
             <AppStack.Screen
               name="HomeScreen"
@@ -102,13 +124,36 @@ const App = () => {
                 headerShown: false,
               }}
             />
-            <AppStack.Screen
-              name="FinishRegister"
-              component={FinishRegister}
+             <AppStack.Screen
+              name="SelectKeyScreen"
+              component={SelectKeyScreen}
               options={{
                 headerShown: false,
               }}
             />
+               <AppStack.Screen
+              name="ValueTransferScreen"
+              component={ValueTransferScreen}
+              options={{
+                headerShown: false,
+              }}
+            />
+            <AppStack.Screen
+              name="ReceiptScreen"
+              component={ReceiptScreen}
+              options={{
+                headerShown: false,
+              }}
+            />
+             <AppStack.Screen
+              name="StatementScreen"
+              component={StatementScreen}
+              options={{
+                headerShown: false,
+              }}
+            />
+          
+         
           </AppStack.Navigator>
     </NavigationContainer>
   );

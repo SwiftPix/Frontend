@@ -115,6 +115,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     height: 60,
     width: 60,
+
   },
   body: {
     flex: 1,
@@ -129,7 +130,7 @@ const styles = StyleSheet.create({
     minWidth: '10%',
     alignSelf: 'center',
     flexDirection: 'row',
-    backgroundColor: '#4589FF',
+    backgroundColor: '#00A896',
     shadowColor: '#1E1E1E',
     justifyContent: 'space-around',
     alignItems: 'center',
@@ -156,6 +157,7 @@ const styles = StyleSheet.create({
     marginTop: 20,
     width: 150,
     textAlign: 'center',
+    
   },
   pixText: {
     color: '#FFF',
