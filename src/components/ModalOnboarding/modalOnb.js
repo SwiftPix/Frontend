@@ -11,7 +11,7 @@ import security from '../../assets/security.png';
 
 // Interface
 const WIDTH = Dimensions.get('window').width;
-const HEIGHT_MODAL = '65%';
+const HEIGHT_MODAL = '70%';
 
 const ModalOnboarding = (props) => {
   const navigation = useNavigation();
@@ -24,8 +24,9 @@ const ModalOnboarding = (props) => {
       <View
         style={{
           height: HEIGHT_MODAL,
-          width: WIDTH - 60,
+          width: WIDTH - 30,
           paddingTop: 10,
+          paddingHorizontal: 24,
           backgroundColor: '#FAFBFE',
           borderRadius: 5,
           elevation: 2,
@@ -53,7 +54,7 @@ const ModalOnboarding = (props) => {
           {' '}
           Tenha em mãos seu documento de identidade(RG,CNH ou RNE).
         </Text>
-        <Text style={styles.alert}>Você precisará dele mais adiante para cadastrar seus dados.</Text>
+        <Text style={styles.alert}>Você precisará dele mais adiante.</Text>
 
         <TouchableOpacity
           style={styles.doneButton}
@@ -62,7 +63,7 @@ const ModalOnboarding = (props) => {
             navigation.navigate('LoadingAppScreen');
             setTimeout(() => {
               navigation.navigate('DocChoiceScreen');
-            }, 4000);
+            }, 500);
           }}
         >
           <Text style={styles.doneText}>Ok, entendi!</Text>

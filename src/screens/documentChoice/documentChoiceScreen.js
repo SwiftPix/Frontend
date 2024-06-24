@@ -42,19 +42,30 @@ const DocChoiceScreen = ({ navigation }) => {
   return (
     <ScrollView>
     <SafeAreaView style={styles.container}>
-      <Image style={styles.headerImg} source={logo} />
-      <Text style={styles.guideText}>
-        Digite seus dados para realizar seu cadastro
-      </Text>
-
-      <Text style={styles.registerText}>Nome:</Text>
+      <View style={styles.logoView}>
+        <Image style={styles.headerImg} source={logo} />
+      </View>
+      <View style={styles.guideTextContainer}>
+        <Text style={styles.guideText}>
+          Vamos criar uma conta no SwiftPix!
+        </Text>
+        <Text style={styles.secondaryGuideText}>
+          Insira seu CPF para começar. Ele será usado como sua principal identificação no SwiftPix.
+        </Text>
+      </View>
+      <View style={styles.inputs}>
+      <View style={styles.inputContainer}>
+        <Text style={styles.registerText}>Nome:</Text>
           <TextInput
             value={name}
             style={styles.input}
+            placeholder='Fulano da Silva'
+            placeholderTextColor='#DEDEDE'
             onChangeNumber={(text) => onChangeName(text)}
           />
-
-      <Text style={styles.registerText}>CPF:</Text>
+    </View>
+      <View style={styles.inputContainer}>
+        <Text style={styles.registerText}>CPF:</Text>
           <TextInputMask
             type="cpf"
             value={cpf}
@@ -62,6 +73,8 @@ const DocChoiceScreen = ({ navigation }) => {
             style={styles.input}
             onChangeText={(text) => onChangeText(text)}
           />
+      </View>
+      <View style={styles.inputContainer}>
        <Text style={styles.registerText}>Celular:</Text>
           <TextInputMask
                 type="cel-phone"
@@ -70,20 +83,26 @@ const DocChoiceScreen = ({ navigation }) => {
                 style={styles.input}
                 onChangeText={(text) => onChangePhone(text)}
               />
-      <Text style={styles.registerText}>Senha:</Text>
+      </View>
+      <View style={styles.inputContainer}>
+        <Text style={styles.registerText}>Senha:</Text>
           <TextInput
             value={password}
             style={styles.input}
             secureTextEntry
             onChangeNumber={(text) => onChangeNumber(text)}
           />
-      <Text style={styles.registerText}> Repetir Senha:</Text>
+      </View>
+      <View style={styles.inputContainer}>
+        <Text style={styles.registerText}> Repetir Senha:</Text>
           <TextInput
             value={password}
             style={styles.input}
             secureTextEntry
             onChangeNumber={(text) => onChangeNumber(text)}
           />
+      </View>
+    </View>
       <TouchableOpacity
         style={styles.buttonNext}
         onPress={() => changeModalVisible(true)}
@@ -101,7 +120,7 @@ const DocChoiceScreen = ({ navigation }) => {
           setData={setData}
         />
       </Modal>
-      <TouchableOpacity 
+      {/* <TouchableOpacity 
           style={styles.buttonBack} 
           onPress={() => navigation.navigate('Onboarding')} 
         >
@@ -112,7 +131,7 @@ const DocChoiceScreen = ({ navigation }) => {
             style={styles.iconBack}
           />
       <Text style={styles.textBack}>Voltar</Text>
-    </TouchableOpacity>
+    </TouchableOpacity> */}
     </SafeAreaView>
     </ScrollView>
   );

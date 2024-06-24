@@ -126,7 +126,7 @@ const OnboardingScreen = ({ navigation }) => {
           navigation.navigate('LoadingAppScreen');
           setTimeout(() => {
             navigation.navigate('LoginScreen');
-          }, 4000);
+          }, 500);
         }}
       >
         <Text style={styles.textLogin}>Já tenho conta</Text>

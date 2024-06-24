@@ -30,27 +30,32 @@ const LoginScreen = ({ navigation }) => {
         <Image style={styles.logo} source={logo} />
         <View style={styles.loginBox}>
           <View style={styles.helloContent}>
-            <Text style={styles.helloText}>Olá,</Text>
-            <Text style={styles.againText}>novamente!</Text>
+            <Text style={styles.helloText}>Bem-vindo de volta!</Text>
+            <Text style={styles.secondaryHelloText}>Preencha os campos abaixo para acessar sua conta.</Text>
           </View>
-          <Text style={styles.loginText}>CPF:</Text>
-          <TextInputMask
-            type="cpf"
-            //value={cpf}
-            keyboardType="numeric"
-            style={styles.input}
-            onChangeText={(text) => onChangeText(text)}
-          />
-          <Text style={styles.loginText}>Senha:</Text>
-          <TextInput
-            value={password}
-            style={styles.input}
-            secureTextEntry
-            onChangeNumber={(text) => onChangeNumber(text)}
-          />
-          {/* <TouchableOpacity>
-            <Text style={styles.forgotPassword}>Esqueceu a senha?</Text>
-          </TouchableOpacity> */}
+          <View style={styles.loginContainer}>
+            <Text style={styles.loginText}>CPF:</Text>
+            <TextInputMask
+              type="cpf"
+              value={cpf}
+              placeholder='000.000.000-00'
+              keyboardType="numeric"
+              style={styles.input}
+              onChangeText={(text) => onChangeText(text)}
+              placeholderTextColor='#DEDEDE'
+            />
+          </View>
+          <View style={styles.loginContainer}>
+            <Text style={styles.loginText}>Senha:</Text>
+            <TextInput
+              value={password}
+              style={styles.input}
+              secureTextEntry
+              onChangeNumber={(text) => onChangeNumber(text)}
+              placeholderTextColor='#DEDEDE'
+              placeholder='*************'
+            />
+          </View>
           <TouchableOpacity
             style={styles.btnLogin}
             onPress={() => {
@@ -58,12 +63,12 @@ const LoginScreen = ({ navigation }) => {
               navigation.navigate('HomeScreen');
             }}
           >
-            <Text style={styles.btnText}>Entrar</Text>
+            <Text style={styles.btnText}>Avançar</Text>
           </TouchableOpacity>
         </View>
         <TouchableOpacity style={styles.registerBtn}  onPress={() => navigation.navigate('DocChoiceScreen')}  >
-          <Text style={styles.accountText}>Ainda não possui uma conta?</Text>
-          <Text style={styles.registerText}>Cadastre-se!</Text>
+          <Text style={styles.accountText}>Ainda não tem uma conta?</Text>
+          <Text style={styles.registerText}>Crie agora</Text>
         </TouchableOpacity>
       </SafeAreaView>
     </KeyboardAvoidingWrapper>
