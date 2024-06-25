@@ -7,7 +7,7 @@ const UserProvider = ({ children }) => {
   const [balance, setBalance] = useState(0);
   const value = React.useMemo(
     () => ({
-      id,
+      user,
       setId,
       balance,
       setBalance,

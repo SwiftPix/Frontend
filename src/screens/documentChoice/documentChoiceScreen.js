@@ -1,6 +1,6 @@
 /* eslint-disable no-unused-vars */
 // Import React Components
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import {
   SafeAreaView,
   View,
@@ -31,6 +31,8 @@ const DocChoiceScreen = ({ navigation }) => {
   const [celphone, onChangePhone] = useState('');
   const [name, onChangeName] = useState(null);
   const [password, onChangeNumber] = useState(null);
+
+
 
   const changeModalVisible = (bool) => {
     setisModalVisible(bool);
