@@ -1,0 +1,111 @@
+import { StyleSheet } from 'react-native';
+
+const styles = StyleSheet.create({
+  container: {
+    flex: 0.9,
+    alignItems: 'center',
+    color: '#FAFBFE',
+  },
+  logo: {
+    top: '-5%',
+    width: 60,
+    height: 60,
+    alignSelf: 'center',
+    resizeMode: 'contain',
+    flex: 0.5,
+  },
+  loginBox: {
+    top: '-20%',
+    padding: 15,
+    flex: 0.7,
+    height: '100%',
+    width: '100%',
+    borderRadius: 10,
+    justifyContent: 'space-around',
+  },
+  helloContent: {
+    flexDirection: 'column',
+    marginTop: 10,
+    marginBottom: 20,
+    gap: 24,
+  },
+  helloText: {
+    fontFamily: 'boldIBM',
+    color: '#000000',
+    fontSize: 32,
+    textAlign: 'left',
+    fontWeight: '900',
+  },
+  secondaryHelloText: {
+    fontFamily: 'ibmRegular',
+    color: '#6C6C6C',
+    fontSize: 16,
+    textAlign: 'left',
+    fontWeight: '400',
+  },
+  loginText: {
+    fontFamily: 'ibmRegular',
+    fontSize: 16,
+    fontWeight: '600',
+    color: '#000000',
+    marginTop: 20,
+  },
+  loginContainer: {
+    gap: 8,
+  },
+  input: {
+    height: 52,
+    borderWidth: 1,
+    borderRadius: 8,
+    backgroundColor: '#f4f4f4',
+    borderColor: '#DEDEDE',
+    paddingLeft: 15,
+    color: '#000000',
+    fontSize: 16,
+    fontFamily: 'ibmRegular',
+  },
+  forgotPassword: {
+    fontFamily: 'ibmRegular',
+    marginTop: 15,
+    marginBottom: 30,
+    color: '#000000',
+    fontSize: 16,
+  },
+
+  btnLogin: {
+    borderRadius: 15,
+    padding: 10,
+    marginTop: 20,
+    backgroundColor: '#00A896',
+    width: '100%',
+    alignSelf: 'center',
+    alignItems: 'center',
+  },
+  btnText: {
+    fontFamily: 'boldIBM',
+    fontSize: 20,
+    color: '#fff',
+  },
+  registerBtn: {
+    bottom: '15%',
+    gap: 4,
+    flexDirection: 'row',
+    justifyContent: 'center',
+    alignItems: 'center',
+    alignContent: 'center',
+    position: 'absolute',
+    bottom: 0,
+  },
+  accountText: {
+    color: '#000000',
+    fontSize: 16,
+    fontFamily: 'ibmRegular',
+  },
+  registerText: {
+    color: '#00A896',
+    fontSize: 16,
+    fontWeight: '600',
+    fontFamily: 'ibmRegular',
+  },
+});
+export default styles;
