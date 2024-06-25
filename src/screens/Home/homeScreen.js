@@ -65,49 +65,50 @@ const HomeScreen = ({ navigation }) => {
   return (
     <SafeAreaView style={styles.container}>
       <View style={styles.header}>
-        <View style={styles.headerImages}>
+        <View style={styles.headerImagesContainer}>
           <TouchableOpacity>
-            <Image style={styles.iconHeader} source={iconNotification} />
+              <Image style={styles.iconHeader} source={iconUser} />
           </TouchableOpacity>
-
-          <TouchableOpacity>
-            <Image style={styles.iconHeader} source={iconSettings} />
-          </TouchableOpacity>
-          <TouchableOpacity>
-            <Image style={styles.iconHeader} source={iconUser} />
-          </TouchableOpacity>
+          <View style={styles.headerImages}>
+          <TouchableOpacity
+                onPress={() => {
+                  functionA();
+                  functionB();
+                  <Icon
+                    name="eye"
+                    size={20}
+                    color='#fff'
+                    style={styles.iconHeader}
+                  />;
+                }}
+              >
+                <Icon
+                  name="eye-slash"
+                  size={20}
+                  color='#fff'
+                  style={styles.iconHeader}
+                />
+            </TouchableOpacity>
+            <TouchableOpacity>
+              <Image style={styles.iconHeader} source={iconNotification} />
+            </TouchableOpacity>
+            <TouchableOpacity>
+              <Image style={styles.iconHeader} source={iconSettings} />
+            </TouchableOpacity>
+          </View>
         </View>
-        <Text style={styles.headerText}>Olá, usuário //context.id</Text>
+        <Text style={styles.headerText}>Olá, usuário!</Text>
       </View>
       <View style={styles.body}>
         <View style={styles.list}>
           <View style={styles.balanceTitle}>
             <Text style={styles.textBalance}>Saldo disponível</Text>
-            <TouchableOpacity
-              onPress={() => {
-                functionA();
-                functionB();
-                <Icon
-                  name="eye"
-                  size={25}
-                  color="#000"
-                  style={styles.iconHide}
-                />;
-              }}
-            >
-              <Icon
-                name="eye-slash"
-                size={25}
-                color="#000"
-                style={styles.iconHide}
-              />
-            </TouchableOpacity>
           </View>
           {shouldShow ? (
             <HideContent />
           ) : (
             <>
-              <Text style={styles.balance}>R$ {balance.toFixed(2)}</Text>
+              <Text style={styles.balance}>R$ {parseFloat(balance).toFixed(2)}</Text>
               <View
                 style={{
                   maxHeight: '50%',
@@ -166,7 +167,7 @@ const HomeScreen = ({ navigation }) => {
             onPress={() => navigation.navigate('SelectKeyScreen')}
           >
             <Image style={styles.pixLogo} source={iconPix} />
-            <Text style={styles.pixText}>Pagar por Pix</Text>
+            <Text style={styles.pixText}>Transferir por Pix</Text>
           </TouchableOpacity>
           <View style={styles.btnContainer}>
             <View style={styles.btnRows}>

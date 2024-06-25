@@ -4,6 +4,7 @@
 import {
   IBMPlexSans_400Regular,
   IBMPlexSans_700Bold,
+  IBMPlexSans_500Medium
 } from '@expo-google-fonts/ibm-plex-sans/';
 import AppLoading from 'expo-app-loading';
 import { useFonts } from 'expo-font';
@@ -39,6 +40,7 @@ const App = () => {
   const [fontsLoaded] = useFonts({
     ibmRegular: IBMPlexSans_400Regular,
     boldIBM: IBMPlexSans_700Bold,
+    mediumIBM: IBMPlexSans_500Medium,
   });
   if (!fontsLoaded) {
     return <AppLoading />;
@@ -50,58 +52,43 @@ const App = () => {
       <AppStack.Navigator
             headerModel="none"
             screenOptions={{
-              headerTintColor: '#fff',
-              headerStyle: {
-                backgroundColor: '#0F61FD',
-              },
-              headerTitleStyle: {
-                fontFamily: 'boldIBM',
-                fontSize: 20,
-              },
-              headerTitleAlign: 'center',
+              headerTransparent: true,
+              title: null
             }}
           >
             
             <AppStack.Screen
               name="Onboarding"
               component={OnboardingScreen}
-              options={{ headerShown: false }}
             />
 
             <AppStack.Screen
               name="LoginRegis"
               component={LoginRegisScreen}
-              options={{ headerShown: false }}
             />
 
             <AppStack.Screen
               name="DataReviewScreen"
               component={DataReviewScreen}
-              options={{ headerShown: false }}
             />
             <AppStack.Screen
               name="Biometrics"
               component={BiometricScreen}
-              options={{
-                headerShown: false,
-              }}
             />
             <AppStack.Screen
               name="LoginScreen"
               component={LoginScreen}
-              options={{ headerShown: false }}
             />
                <AppStack.Screen
               name="FinishRegister"
               component={FinishRegister}
-              options={{
-                headerShown: false,
-              }}
             />
             <AppStack.Screen
               name="HomeScreen"
               component={HomeScreen}
-              options={{ headerShown: false }}
+              options={{
+                headerShown: false
+              }}
             />
             <AppStack.Screen
               name="LoadingScreen"
@@ -120,37 +107,22 @@ const App = () => {
              <AppStack.Screen
               name="DocChoiceScreen"
               component={DocChoiceScreen}
-              options={{
-                headerShown: false,
-              }}
             />
              <AppStack.Screen
               name="SelectKeyScreen"
               component={SelectKeyScreen}
-              options={{
-                headerShown: false,
-              }}
             />
                <AppStack.Screen
               name="ValueTransferScreen"
               component={ValueTransferScreen}
-              options={{
-                headerShown: false,
-              }}
             />
             <AppStack.Screen
               name="ReceiptScreen"
               component={ReceiptScreen}
-              options={{
-                headerShown: false,
-              }}
             />
              <AppStack.Screen
               name="StatementScreen"
               component={StatementScreen}
-              options={{
-                headerShown: false,
-              }}
             />
           
          

@@ -126,6 +126,11 @@ const SelectKeyScreen = ({ navigation }) => {
            <Text style={styles.selectTitle}>Selecionar País onde você está:</Text>
             <CountryPickerModal style={styles.selectCountry}
               visible
+              translation='por'
+              placeholder={'Selecione o país de destino'}
+              filterProps={{
+                placeholder: 'Nome do país'
+              }}
               withFilter
               onSelect={(country) => setSelectedCountry(country)}
               countryCode={selectedCountry?.cca2}

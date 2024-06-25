@@ -8,22 +8,27 @@ const styles = StyleSheet.create({
     justifyContent: 'space-between',
   },
   header: {
-    backgroundColor: '#00A896',
+    flexDirection: 'column',
+    backgroundColor: '#00A89657',
+    gap: 32,
     minHeight: '18%',
+  },
+  headerImagesContainer: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    marginHorizontal: 24,
+    marginTop: 24,
   },
   headerText: {
     color: '#FFF',
-    fontSize: 30,
-    position: 'absolute',
-    bottom: 15,
-    left: 20,
-    fontFamily: 'ibmRegular',
+    fontSize: 24,
+    marginHorizontal: 24,
+    marginBottom: 24,
+    fontFamily: 'mediumIBM',
   },
   headerImages: {
     flexDirection: 'row',
-    position: 'absolute',
-    top: 10,
-    right: 10,
+    justifyContent: 'flex-end',
   },
   iconHeader: {
     margin: 10,
@@ -55,10 +60,6 @@ const styles = StyleSheet.create({
     textAlign: 'left',
     fontFamily: 'ibmRegular',
     fontSize: 20,
-  },
-  iconHide: {
-    left: 130,
-    marginTop: '40%',
   },
   balance: {
     fontFamily: 'ibmRegular',
@@ -125,18 +126,15 @@ const styles = StyleSheet.create({
   },
   pixBtn: {
     borderRadius: 10,
-    padding: 10,
     marginBottom: 10,
-    minWidth: '10%',
     alignSelf: 'center',
     flexDirection: 'row',
     backgroundColor: '#00A896',
-    shadowColor: '#1E1E1E',
-    justifyContent: 'space-around',
+    justifyContent: 'center',
+    gap: 16,
     alignItems: 'center',
-    width: 220,
-    height: 60,
-    elevation: 5,
+    width: '100%',
+    height: 56,
   },
   btnContainer: {
     flexDirection: 'row',
@@ -162,8 +160,7 @@ const styles = StyleSheet.create({
   pixText: {
     color: '#FFF',
     fontFamily: 'ibmRegular',
-    fontSize: 22,
-    marginTop: -5,
+    fontSize: 20,
   },
   logo: {
     position: 'absolute',
@@ -172,9 +169,8 @@ const styles = StyleSheet.create({
     resizeMode: 'contain',
   },
   pixLogo: {
-    height: 25,
-    width: 25,
-    marginRight: -5,
+    height: 24,
+    width: 24,
   },
   buttons: {
     position: 'absolute',

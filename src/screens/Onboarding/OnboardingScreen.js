@@ -49,6 +49,7 @@ const OnboardingScreen = ({ navigation }) => {
   const setData = (data) => {
     setChooseData(data);
   };
+
   return (
     <SafeAreaView style={styles.container}>
       <Image style={styles.logoTop} source={logoTop} />
