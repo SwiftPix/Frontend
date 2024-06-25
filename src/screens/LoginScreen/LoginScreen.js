@@ -1,29 +1,27 @@
-// Import React Components
-import React, { useState, useContext } from 'react';
-import {
-  SafeAreaView,
-  View,
-  Text,
-  Image,
-  TouchableOpacity,
-} from 'react-native';
+import React, { useState } from 'react';
+import { SafeAreaView, View, Text, Image, TouchableOpacity } from 'react-native';
 import { TextInput } from 'react-native-gesture-handler';
 import { TextInputMask } from 'react-native-masked-text';
+import axios from 'axios'; 
+import KeyboardAvoidingWrapper from '../../components/KeyboardWrapper';
+import { loginUser } from '../../services/api'; 
+import logo from '../../../assets/logoTop.png';
 import styles from './styles';
 
-// Import Component Keyboard Avoid Wrapper
-import KeyboardAvoidingWrapper from '../../components/KeyboardWrapper';
-
-// Import User Context
-import { UserContext } from '../../context/userContext';
-
-import logo from '../../../assets/logoTop.png';
-
-// Interface
 const LoginScreen = ({ navigation }) => {
-  const context = useContext(UserContext);
-  const [cpf, onChangeText] = useState('');
-  const [password, onChangeNumber] = useState(null);
+  const [cpf, setCpf] = useState('');
+  const [password, setPassword] = useState('');
+
+  const handleLogin = async () => {
+    try {
+      const response = await loginUser({ cpf, password });
+      navigation.navigate('HomeScreen');
+    } catch (error) {
+      console.error('Erro ao fazer login:', error);
+      
+    }
+  };
+
   return (
     <KeyboardAvoidingWrapper>
       <SafeAreaView style={styles.container}>
@@ -41,7 +39,7 @@ const LoginScreen = ({ navigation }) => {
               placeholder='000.000.000-00'
               keyboardType="numeric"
               style={styles.input}
-              onChangeText={(text) => onChangeText(text)}
+              onChangeText={setCpf}
               placeholderTextColor='#DEDEDE'
             />
           </View>
@@ -51,22 +49,19 @@ const LoginScreen = ({ navigation }) => {
               value={password}
               style={styles.input}
               secureTextEntry
-              onChangeNumber={(text) => onChangeNumber(text)}
+              onChangeText={setPassword}
               placeholderTextColor='#DEDEDE'
               placeholder='*************'
             />
           </View>
           <TouchableOpacity
             style={styles.btnLogin}
-            onPress={() => {
-              //context.setId(cpf);
-              navigation.navigate('HomeScreen');
-            }}
+            onPress={handleLogin}
           >
             <Text style={styles.btnText}>Avançar</Text>
           </TouchableOpacity>
         </View>
-        <TouchableOpacity style={styles.registerBtn}  onPress={() => navigation.navigate('DocChoiceScreen')}  >
+        <TouchableOpacity style={styles.registerBtn} onPress={() => navigation.navigate('DocChoiceScreen')}>
           <Text style={styles.accountText}>Ainda não tem uma conta?</Text>
           <Text style={styles.registerText}>Crie agora</Text>
         </TouchableOpacity>

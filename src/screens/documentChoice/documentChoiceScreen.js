@@ -1,48 +1,58 @@
-const DocChoiceScreen = ({ navigation }) => {
+import React, { useState } from 'react';
+import {
+  SafeAreaView,
+  View,
+  Text,
+  Image,
+  TouchableOpacity,
+  Modal,
+  Alert,
+  KeyboardAvoidingView,
+  Platform,
+  ScrollView,
+  TextInput
+} from 'react-native';
+import { TextInputMask } from 'react-native-masked-text';
+import { useNavigation } from '@react-navigation/native';
+import LoadingAppScreen from '../../screens/loadingApp/loadingAppScreen';
+import ModalDocumentChoice from '../../components/modalDocumentChoice/modalDocumentChoice';
+import logo from '../../../assets/logoTop.png';
+import styles from './styles';
+import { createUser } from '../../services/api'; 
+
+
+const DocChoiceScreen = () => {
+  const navigation = useNavigation();
   const [isModalVisible, setisModalVisible] = useState(false);
   const [chooseData, setChooseData] = useState();
-  const [cpf, onChangeText] = useState('');
-  const [celphone, onChangePhone] = useState('');
-  const [name, onChangeName] = useState('');
-  const [password, onChangePassword] = useState('');
-  const [confirmPassword, onChangeConfirmPassword] = useState('');
+  const [cpf, setCpf] = useState('');
+  const [celphone, setCelphone] = useState('');
+  const [name, setName] = useState('');
+  const [password, setPassword] = useState('');
   const [loading, setLoading] = useState(false);
 
   const changeModalVisible = (bool) => {
     setisModalVisible(bool);
   };
+
   const setData = (data) => {
     setChooseData(data);
   };
 
-  const handleCreateAccount = async () => {
-    if (password !== confirmPassword) {
-      Alert.alert('Erro', 'As senhas não coincidem');
-      return;
-    }
-
-    const userData = {
-      name,
-      cpf,
-      cellphone: celphone,
-      password
-    };
-
+  const handleRegister = async () => {
     setLoading(true);
-
     try {
-      const response = await createUser(userData);
-      setLoading(false); // Finaliza o carregamento
-      Alert.alert('Sucesso', 'Conta criada com sucesso');
-      navigation.navigate('BiometricScreen');
+      await createUser({ name, cpf, celphone, password });
+      setLoading(false);
+      navigation.navigate('biometricScreen');
     } catch (error) {
       setLoading(false);
-      Alert.alert('Erro', error.message || 'Ocorreu um erro ao criar a conta');
+      Alert.alert('Erro', 'Não foi possível criar o usuário. Tente novamente.');
     }
   };
 
   if (loading) {
-    return <LoadingAppScreen />; 
+    return <LoadingAppScreen />;
   }
 
   return (
@@ -71,7 +81,7 @@ const DocChoiceScreen = ({ navigation }) => {
                 style={styles.input}
                 placeholder='Fulano da Silva'
                 placeholderTextColor='#DEDEDE'
-                onChangeText={onChangeName}
+                onChangeText={setName}
               />
             </View>
             <View style={styles.inputContainer}>
@@ -81,7 +91,7 @@ const DocChoiceScreen = ({ navigation }) => {
                 value={cpf}
                 keyboardType="numeric"
                 style={styles.input}
-                onChangeText={onChangeText}
+                onChangeText={setCpf}
               />
             </View>
             <View style={styles.inputContainer}>
@@ -91,7 +101,7 @@ const DocChoiceScreen = ({ navigation }) => {
                 value={celphone}
                 keyboardType="numeric"
                 style={styles.input}
-                onChangeText={onChangePhone}
+                onChangeText={setCelphone}
               />
             </View>
             <View style={styles.inputContainer}>
@@ -100,24 +110,30 @@ const DocChoiceScreen = ({ navigation }) => {
                 value={password}
                 style={styles.input}
                 secureTextEntry
-                onChangeText={onChangePassword}
+                onChangeText={setPassword}
               />
             </View>
             <View style={styles.inputContainer}>
               <Text style={styles.registerText}>Repetir Senha:</Text>
               <TextInput
-                value={confirmPassword}
+                value={password}
                 style={styles.input}
                 secureTextEntry
-                onChangeText={onChangeConfirmPassword}
+                onChangeText={setPassword}
               />
             </View>
           </View>
           <TouchableOpacity
             style={styles.buttonNext}
-            onPress={handleCreateAccount}
+            onPress={handleRegister}
           >
             <Text style={styles.textNext}>Avançar</Text>
+          </TouchableOpacity>
+          <TouchableOpacity
+            style={styles.buttonBack}
+            onPress={() => navigation.navigate('OnboardingScreen')}
+          >
+            <Text style={styles.textBack}>Voltar</Text>
           </TouchableOpacity>
           <Modal
             transparent
