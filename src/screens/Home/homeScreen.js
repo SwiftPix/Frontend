@@ -27,6 +27,7 @@ import iconPix from '../../../assets/pix.png';
 import iconKey from '../../../assets/key.png';
 import iconCrow from '../../../assets/crown.png';
 
+
 // Interface
 const HomeScreen = ({ navigation }) => {
   const context = useContext(UserContext);
@@ -84,6 +85,14 @@ const HomeScreen = ({ navigation }) => {
               >
                 <Icon
                   name="eye-slash"
+                  size={20}
+                  color='#fff'
+                  style={styles.iconHeader}
+                />
+            </TouchableOpacity>
+            <TouchableOpacity>
+            <Icon
+                  name="coins"
                   size={20}
                   color='#fff'
                   style={styles.iconHeader}
