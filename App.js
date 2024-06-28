@@ -58,7 +58,7 @@ const App = () => {
               title: null
             }}
           > 
-            <AppStack.Screen
+            {/* <AppStack.Screen
               name="Onboarding"
               component={OnboardingScreen}
             />
@@ -83,7 +83,7 @@ const App = () => {
                <AppStack.Screen
               name="FinishRegister"
               component={FinishRegister}
-            />
+            /> */}
             <AppStack.Screen
               name="HomeScreen"
               component={HomeScreen}

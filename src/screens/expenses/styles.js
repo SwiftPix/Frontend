@@ -4,7 +4,7 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     fontFamily: 'ibmRegular',
-    backgroundColor: '#F4F4F4',
+    backgroundColor: '#fff',
     paddingTop: '15%',
     justifyContent: 'space-between',
   },
