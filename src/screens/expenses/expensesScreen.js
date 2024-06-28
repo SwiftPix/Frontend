@@ -4,34 +4,18 @@ import {
   SafeAreaView,
   View,
   Text,
-  Image,
   TouchableOpacity,
   ScrollView,
 } from 'react-native';
-import Icon from 'react-native-vector-icons/FontAwesome5';
 import { useIsFocused } from '@react-navigation/native';
 import styles from './styles';
 
-// Import Component Hide Content
-import HideContent from '../../components/HomeScreenHideContent/HideContent';
-
 // Import APIs Back End
-import { balanceApi } from '../../services/api';
 import { UserContext } from '../../context/userContext';
 
-// Import Images
-import iconNotification from '../../../assets/notification.png';
-import iconSettings from '../../../assets/settings.png';
-import iconUser from '../../../assets/user.png';
-import iconPix from '../../../assets/pix.png';
-import iconKey from '../../../assets/key.png';
-import iconCrow from '../../../assets/crown.png';
-
-
 // Interface
-const HomeScreen = ({ navigation }) => {
+const ExpensesScreen = ({ navigation }) => {
   const context = useContext(UserContext);
-  const [balance, setBalance] = useState('');
   const [transactions, setTransactions] = useState('');
   const isFocused = useIsFocused();
 
@@ -56,70 +40,15 @@ const HomeScreen = ({ navigation }) => {
   //       console.log(err);
   //     });
   // }, [isFocused]);
-  const [shouldShow, setShouldShow] = useState(true);
-  const functionA = () => {
-    setShouldShow(!shouldShow);
-  };
-  const functionB = () => {
-    return <Icon name="eye" size={25} color="#000" style={styles.iconHide} />;
-  };
   return (
     <SafeAreaView style={styles.container}>
-      <View style={styles.header}>
-        <View style={styles.headerImagesContainer}>
-          <TouchableOpacity>
-              <Image style={styles.iconHeader} source={iconUser} />
-          </TouchableOpacity>
-          <View style={styles.headerImages}>
-          <TouchableOpacity
-                onPress={() => {
-                  functionA();
-                  functionB();
-                  <Icon
-                    name="eye"
-                    size={20}
-                    color='#fff'
-                    style={styles.iconHeader}
-                  />;
-                }}
-              >
-                <Icon
-                  name="eye-slash"
-                  size={20}
-                  color='#fff'
-                  style={styles.iconHeader}
-                />
-            </TouchableOpacity>
-            <TouchableOpacity
-              onPress={ navigation.navigate('ExpensesScreen') }
-            >
-            <Icon
-                  name="coins"
-                  size={20}
-                  color='#fff'
-                  style={styles.iconHeader}
-                />
-            </TouchableOpacity>
-            <TouchableOpacity>
-              <Image style={styles.iconHeader} source={iconNotification} />
-            </TouchableOpacity>
-            <TouchableOpacity>
-              <Image style={styles.iconHeader} source={iconSettings} />
-            </TouchableOpacity>
-          </View>
-        </View>
-        <Text style={styles.headerText}>Olá, usuário!</Text>
-      </View>
       <View style={styles.body}>
         <View style={styles.list}>
           <View style={styles.balanceTitle}>
-            <Text style={styles.textBalance}>Saldo disponível</Text>
+            <Text style={styles.textBalance}>Saldo de despesas</Text>
           </View>
-          {shouldShow ? (
-            <HideContent />
-          ) : (
             <>
-              <Text style={styles.balance}>R$ {parseFloat(balance).toFixed(2)}</Text>
+              <Text style={styles.balance}>R$ 20,00</Text>
               <View
                 style={{
                   maxHeight: '50%',
@@ -128,7 +57,7 @@ const HomeScreen = ({ navigation }) => {
                 }}
               >
                 <ScrollView contentContainerStyle={styles.transactionsScroll}>
-                  {transactions.map((transaction) => {
+                  {/* {transactions.map((transaction) => {
                     return (
                       <TouchableOpacity
                         style={styles.transactions}
@@ -153,12 +82,10 @@ const HomeScreen = ({ navigation }) => {
                         </View>
                       </TouchableOpacity>
                     );
-                  })}
+                  })} */}
                 </ScrollView>
               </View>
             </>
-          )}
-
           {/* <TouchableOpacity
             onPress={() => navigation.navigate('StatementScreen')}
             style={styles.statementButton}
@@ -175,10 +102,9 @@ const HomeScreen = ({ navigation }) => {
         <View style={styles.buttons}>
           <TouchableOpacity
             style={styles.pixBtn}
-            onPress={() => navigation.navigate('SelectKeyScreen')}
+            onPress={() => navigation.navigate('AddExpenseScreen')}
           >
-            <Image style={styles.pixLogo} source={iconPix} />
-            <Text style={styles.pixText}>Transferir por Pix</Text>
+            <Text style={styles.pixText}>Adicionar despesa</Text>
           </TouchableOpacity>
           <View style={styles.btnContainer}>
             <View style={styles.btnRows}>
@@ -200,4 +126,4 @@ const HomeScreen = ({ navigation }) => {
   );
 };
 
-export default HomeScreen;
+export default ExpensesScreen;
