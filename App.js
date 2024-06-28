@@ -18,7 +18,6 @@ import OnboardingScreen from './src/screens/Onboarding/OnboardingScreen';
 import LoginRegisScreen from './src/screens/LoginRegis/LoginRegisScreen';
 import LoginScreen from './src/screens/LoginScreen/LoginScreen';
 import HomeScreen from './src/screens/Home/homeScreen';
-import LoadingScreen from './src/screens/loading/loadingScreen';
 import LoadingAppScreen from './src/screens/loadingApp/loadingAppScreen';
 import DocChoiceScreen from './src/screens/documentChoice/documentChoiceScreen';
 import FinishRegister from './src/screens/finishRegister/finishRegisterScreen';
@@ -88,13 +87,6 @@ const App = () => {
               component={HomeScreen}
               options={{
                 headerShown: false
-              }}
-            />
-            <AppStack.Screen
-              name="LoadingScreen"
-              component={LoadingScreen}
-              options={{
-                headerShown: false,
               }}
             />
             <AppStack.Screen
