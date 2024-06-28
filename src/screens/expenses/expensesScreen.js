@@ -4,6 +4,7 @@ import {
   SafeAreaView,
   View,
   Text,
+  Image,
   TouchableOpacity,
   ScrollView,
 } from 'react-native';
@@ -12,6 +13,8 @@ import styles from './styles';
 
 // Import APIs Back End
 import { UserContext } from '../../context/userContext';
+
+import logo from '../../../assets/logoTop.png';
 
 // Interface
 const ExpensesScreen = ({ navigation }) => {
@@ -43,6 +46,7 @@ const ExpensesScreen = ({ navigation }) => {
   return (
     <SafeAreaView style={styles.container}>
       <View style={styles.body}>
+        <Image style={styles.headerImg} source={logo} />
         <View style={styles.list}>
           <View style={styles.balanceTitle}>
             <Text style={styles.textBalance}>Saldo de despesas</Text>

@@ -91,14 +91,14 @@ const HomeScreen = ({ navigation }) => {
                 />
             </TouchableOpacity>
             <TouchableOpacity
-              onPress={ navigation.navigate('ExpensesScreen') }
+              onPress={() => navigation.navigate('ExpensesScreen') }
             >
-            <Icon
-                  name="coins"
-                  size={20}
-                  color='#fff'
-                  style={styles.iconHeader}
-                />
+              <Icon
+                    name="coins"
+                    size={20}
+                    color='#fff'
+                    style={styles.iconHeader}
+              />
             </TouchableOpacity>
             <TouchableOpacity>
               <Image style={styles.iconHeader} source={iconNotification} />

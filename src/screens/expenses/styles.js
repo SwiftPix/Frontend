@@ -5,6 +5,7 @@ const styles = StyleSheet.create({
     flex: 1,
     fontFamily: 'ibmRegular',
     backgroundColor: '#F4F4F4',
+    paddingTop: '15%',
     justifyContent: 'space-between',
   },
   header: {
