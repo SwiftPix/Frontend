@@ -26,7 +26,8 @@ const DocChoiceScreen = () => {
   const [isModalVisible, setisModalVisible] = useState(false);
   const [chooseData, setChooseData] = useState();
   const [cpf, setCpf] = useState('');
-  const [celphone, setCelphone] = useState('');
+  const [cellphone, setCellphone] = useState('');
+  const [email, setEmail] = useState('');
   const [name, setName] = useState('');
   const [password, setPassword] = useState('');
   const [loading, setLoading] = useState(false);
@@ -42,7 +43,7 @@ const DocChoiceScreen = () => {
   const handleRegister = async () => {
     setLoading(true);
     try {
-      await createUser({ name, cpf, celphone, password });
+      await createUser({ name,email, cpf, cellphone, password });
       setLoading(false);
       navigation.navigate('biometricScreen');
     } catch (error) {
@@ -79,15 +80,28 @@ const DocChoiceScreen = () => {
               <TextInput
                 value={name}
                 style={styles.input}
-                placeholder='Fulano da Silva'
+                placeholder='Nome'
                 placeholderTextColor='#DEDEDE'
                 onChangeText={setName}
               />
             </View>
             <View style={styles.inputContainer}>
+              <Text style={styles.registerText}>E-mail:</Text>
+              <TextInput
+                value={email}
+                style={styles.input}
+                placeholder='E-mail'
+                placeholderTextColor='#DEDEDE'
+                onChangeText={setEmail}
+              />
+            </View>
+            
+            <View style={styles.inputContainer}>
               <Text style={styles.registerText}>CPF:</Text>
               <TextInputMask
                 type="cpf"
+                placeholder='000.000.000-00'
+                placeholderTextColor='#DEDEDE'
                 value={cpf}
                 keyboardType="numeric"
                 style={styles.input}
@@ -96,33 +110,28 @@ const DocChoiceScreen = () => {
             </View>
             <View style={styles.inputContainer}>
               <Text style={styles.registerText}>Celular:</Text>
-              <TextInputMask
-                type="cel-phone"
-                value={celphone}
+              <TextInput
+                value={cellphone}
+                placeholder='(00)0000-0000'
+                placeholderTextColor='#DEDEDE'
                 keyboardType="numeric"
                 style={styles.input}
-                onChangeText={setCelphone}
+                onChangeText={setCellphone}
               />
             </View>
             <View style={styles.inputContainer}>
               <Text style={styles.registerText}>Senha:</Text>
               <TextInput
                 value={password}
+                placeholder='Senha'
+                placeholderTextColor='#DEDEDE'
                 style={styles.input}
                 secureTextEntry
                 onChangeText={setPassword}
               />
             </View>
-            <View style={styles.inputContainer}>
-              <Text style={styles.registerText}>Repetir Senha:</Text>
-              <TextInput
-                value={password}
-                style={styles.input}
-                secureTextEntry
-                onChangeText={setPassword}
-              />
+ 
             </View>
-          </View>
           <TouchableOpacity
             style={styles.buttonNext}
             onPress={handleRegister}
