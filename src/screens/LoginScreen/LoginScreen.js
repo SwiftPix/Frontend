@@ -1,8 +1,7 @@
 import React, { useState } from 'react';
-import { SafeAreaView, View, Text, Image, TouchableOpacity } from 'react-native';
+import { SafeAreaView, View, Text, Image, TouchableOpacity, Alert } from 'react-native';
 import { TextInput } from 'react-native-gesture-handler';
 import { TextInputMask } from 'react-native-masked-text';
-import axios from 'axios'; 
 import KeyboardAvoidingWrapper from '../../components/KeyboardWrapper';
 import { loginUser } from '../../services/api'; 
 import logo from '../../../assets/logoTop.png';
@@ -15,10 +14,11 @@ const LoginScreen = ({ navigation }) => {
   const handleLogin = async () => {
     try {
       const response = await loginUser({ cpf, password });
+      console.log('Login bem-sucedido:', response);
       navigation.navigate('HomeScreen');
     } catch (error) {
       console.error('Erro ao fazer login:', error);
-      
+      Alert.alert('Erro', error.error || 'Não foi possível fazer login. Tente novamente.');
     }
   };
 

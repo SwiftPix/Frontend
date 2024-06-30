@@ -49,11 +49,6 @@ const DocChoiceScreen = () => {
         cpf,
         cellphone,
         password,
-        account: '000',  
-        agency: '0001', 
-        balance: 0.0,  
-        currency: 'real',  
-        institution: '001'
       };
       console.log('Enviando payload:', userData);
       await createUser(userData);

@@ -1,5 +1,3 @@
-/* eslint-disable no-unused-vars */
-// Import React Components
 import React, { useState } from 'react';
 import {
   SafeAreaView,
@@ -21,7 +19,8 @@ import logo from '../../../assets/logoTop.png';
 import finishArt from '../../assets/finishArt.png';
 
 // Interface
-const FinishRegister = ({ navigation }) => {
+const FinishRegister = () => {
+  const navigation = useNavigation();
   const [isModalVisible, setisModalVisible] = useState(true);
   const [chooseData, setChooseData] = useState();
 
@@ -32,6 +31,7 @@ const FinishRegister = ({ navigation }) => {
     setChooseData(data);
   };
   const [checked, setChecked] = useState('');
+
   return (
     <SafeAreaView style={styles.container}>
       <Modal
@@ -59,19 +59,19 @@ const FinishRegister = ({ navigation }) => {
       </Text>
       <Image style={styles.imgFinishArt} source={finishArt} />
       <TouchableOpacity 
-          style={styles.buttonBack} 
-          onPress={() => navigation.navigate('Onboarding')} 
-        >
-          <Icon
-            name="chevron-left"
-            size={25}
-            color="#000"
-            style={styles.iconBack}
-          />
-      <Text style={styles.textBack}>Voltar</Text>
-    </TouchableOpacity>
+        style={styles.buttonBack} 
+        onPress={() => navigation.navigate('Onboarding')}
+      >
+        <Icon
+          name="chevron-left"
+          size={25}
+          color="#000"
+          style={styles.iconBack}
+        />
+        <Text style={styles.textBack}>Voltar</Text>
+      </TouchableOpacity>
     </SafeAreaView>
   );
 };
 
-export default (FinishRegister);
+export default FinishRegister;
