@@ -5,7 +5,6 @@ import {
   Text,
   Image,
   TouchableOpacity,
-  Modal,
   Alert,
   KeyboardAvoidingView,
   Platform,
@@ -14,46 +13,67 @@ import {
 } from 'react-native';
 import { TextInputMask } from 'react-native-masked-text';
 import { useNavigation } from '@react-navigation/native';
-import LoadingAppScreen from '../../screens/loadingApp/loadingAppScreen';
-import ModalDocumentChoice from '../../components/modalDocumentChoice/modalDocumentChoice';
+import LoadingAppScreen from '../loadingApp/loadingAppScreen';
 import logo from '../../../assets/logoTop.png';
 import styles from './styles';
-import { createUser } from '../../services/api'; 
-
+import { createUser } from '../../services/api';
 
 const DocChoiceScreen = () => {
   const navigation = useNavigation();
-  const [isModalVisible, setisModalVisible] = useState(false);
-  const [chooseData, setChooseData] = useState();
   const [cpf, setCpf] = useState('');
-  const [celphone, setCelphone] = useState('');
+  const [cellphone, setCellphone] = useState('');
+  const [email, setEmail] = useState('');
   const [name, setName] = useState('');
   const [password, setPassword] = useState('');
   const [loading, setLoading] = useState(false);
 
-  const changeModalVisible = (bool) => {
-    setisModalVisible(bool);
-  };
-
-  const setData = (data) => {
-    setChooseData(data);
-  };
-
   const handleRegister = async () => {
+    // Verificação dos campos obrigatórios
+    if (!name || !email || !cpf || !cellphone || !password) {
+      Alert.alert('Erro', 'Todos os campos são obrigatórios.');
+      return;
+    }
+
+    // Verificação do formato da senha
+    const passwordRegex = /^(?=.*[A-Z])(?=.*[!@#$&*])(?=.*[0-9]).{8,}$/;
+    if (!passwordRegex.test(password)) {
+      Alert.alert('Erro', 'A senha deve ter pelo menos 8 caracteres, uma letra maiúscula e um caractere especial.');
+      return;
+    }
+
     setLoading(true);
     try {
-      await createUser({ name, cpf, celphone, password });
-      setLoading(false);
-      navigation.navigate('biometricScreen');
+      const userData = {
+        name,
+        email,
+        cpf,
+        cellphone,
+        password,
+      };
+      console.log('Enviando payload:', userData);
+      await createUser(userData);
+      Alert.alert('Sucesso', 'Usuário criado com sucesso!');
+      setTimeout(() => {
+        setLoading(false);
+        navigation.navigate('Biometrics');
+      }, 2000); // 2 segundos
     } catch (error) {
       setLoading(false);
-      Alert.alert('Erro', 'Não foi possível criar o usuário. Tente novamente.');
+      console.log('Erro ao criar usuário:', error);
+      const errorMessage = error.error || 'Não foi possível criar o usuário. Tente novamente.';
+      if (errorMessage.includes('já está cadastrado')) {
+        Alert.alert('Erro', 'Usuário já está cadastrado.');
+      } else {
+        Alert.alert('Erro', errorMessage);
+      }
     }
   };
 
   if (loading) {
     return <LoadingAppScreen />;
   }
+
+  const isFormValid = name && email && cpf && cellphone && password;
 
   return (
     <KeyboardAvoidingView
@@ -65,87 +85,48 @@ const DocChoiceScreen = () => {
           <View style={styles.logoView}>
             <Image style={styles.headerImg} source={logo} />
           </View>
-          <View style={styles.guideTextContainer}>
-            <Text style={styles.guideText}>
-              Vamos criar uma conta no SwiftPix!
-            </Text>
-            <Text style={styles.secondaryGuideText}>
-              Insira seu CPF para começar. Ele será usado como sua principal identificação no SwiftPix.
-            </Text>
-          </View>
-          <View style={styles.inputs}>
-            <View style={styles.inputContainer}>
-              <Text style={styles.registerText}>Nome:</Text>
-              <TextInput
-                value={name}
-                style={styles.input}
-                placeholder='Fulano da Silva'
-                placeholderTextColor='#DEDEDE'
-                onChangeText={setName}
-              />
-            </View>
-            <View style={styles.inputContainer}>
-              <Text style={styles.registerText}>CPF:</Text>
-              <TextInputMask
-                type="cpf"
-                value={cpf}
-                keyboardType="numeric"
-                style={styles.input}
-                onChangeText={setCpf}
-              />
-            </View>
-            <View style={styles.inputContainer}>
-              <Text style={styles.registerText}>Celular:</Text>
-              <TextInputMask
-                type="cel-phone"
-                value={celphone}
-                keyboardType="numeric"
-                style={styles.input}
-                onChangeText={setCelphone}
-              />
-            </View>
-            <View style={styles.inputContainer}>
-              <Text style={styles.registerText}>Senha:</Text>
-              <TextInput
-                value={password}
-                style={styles.input}
-                secureTextEntry
-                onChangeText={setPassword}
-              />
-            </View>
-            <View style={styles.inputContainer}>
-              <Text style={styles.registerText}>Repetir Senha:</Text>
-              <TextInput
-                value={password}
-                style={styles.input}
-                secureTextEntry
-                onChangeText={setPassword}
-              />
-            </View>
-          </View>
-          <TouchableOpacity
-            style={styles.buttonNext}
-            onPress={handleRegister}
-          >
-            <Text style={styles.textNext}>Avançar</Text>
-          </TouchableOpacity>
-          <TouchableOpacity
-            style={styles.buttonBack}
-            onPress={() => navigation.navigate('OnboardingScreen')}
-          >
-            <Text style={styles.textBack}>Voltar</Text>
-          </TouchableOpacity>
-          <Modal
-            transparent
-            animationType="fade"
-            visible={isModalVisible}
-            onRequestClose={() => changeModalVisible(false)}
-          >
-            <ModalDocumentChoice
-              changeModalVisible={changeModalVisible}
-              setData={setData}
+          <View style={styles.formView}>
+            <TextInput
+              style={styles.input}
+              placeholder="Nome"
+              value={name}
+              onChangeText={setName}
             />
-          </Modal>
+            <TextInputMask
+              type={'cpf'}
+              value={cpf}
+              onChangeText={setCpf}
+              style={styles.input}
+              placeholder="CPF"
+            />
+            <TextInput
+              style={styles.input}
+              placeholder="Celular"
+              value={cellphone}
+              onChangeText={setCellphone}
+              maxLength={8}  
+            />
+            <TextInput
+              style={styles.input}
+              placeholder="Email"
+              value={email}
+              onChangeText={setEmail}
+            />
+            <TextInput
+              style={styles.input}
+              placeholder="Senha"
+              value={password}
+              secureTextEntry
+              onChangeText={setPassword}
+            />
+            <TouchableOpacity
+              style={isFormValid ? styles.buttonNext : styles.buttonNextDisabled}
+              onPress={handleRegister}
+              disabled={!isFormValid}
+            >
+              <Text style={styles.textNext}>Avançar</Text>
+            </TouchableOpacity>
+          </View>
         </SafeAreaView>
       </ScrollView>
     </KeyboardAvoidingView>

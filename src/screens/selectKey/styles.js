@@ -7,7 +7,6 @@ const styles = StyleSheet.create({
   },
   selectTitle: {
     fontSize: 25,
-    fontFamily: 'boldIBM',
     alignSelf: 'center',
     marginTop: '25%',
   },
@@ -16,7 +15,6 @@ const styles = StyleSheet.create({
   },
   keyText: {
     fontSize: 20,
-    fontFamily: 'boldIBM',
     alignSelf: 'center',
   },
   input: {
@@ -26,7 +24,6 @@ const styles = StyleSheet.create({
     height: '30%',
     bottom: '-10%',
     fontSize: 20,
-    fontFamily: 'boldIBM',
     alignSelf: 'center',
     paddingLeft: 15,
     marginTop: '2%',
@@ -55,7 +52,6 @@ const styles = StyleSheet.create({
   qrcodeText: {
     marginTop: 5,
     fontSize: 20,
-    fontFamily: 'boldIBM',
     color: '#fff',
   },
   nextButton: {
@@ -66,7 +62,6 @@ const styles = StyleSheet.create({
   },
   nextText: {
     fontSize: 20,
-    fontFamily: 'boldIBM',
     color: '#fff',
     textAlign: 'center',
   

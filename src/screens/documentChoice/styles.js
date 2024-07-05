@@ -3,7 +3,7 @@ import { StyleSheet } from 'react-native';
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    color: '#FAFBFE', 
+    backgroundColor: '#FAFBFE', 
     marginHorizontal: 24,   
   },
   headerImg: {
@@ -13,12 +13,10 @@ const styles = StyleSheet.create({
   },
   logoView: {
     alignItems: 'center',
+    marginVertical: 20,
   },
-  guideText: {
-    color: '#000',
-    fontFamily: 'boldIBM',
-    fontSize: 32,
-    textAlign: 'left',
+  formView: {
+    marginTop: 20,
   },
   buttonNext: {
     alignSelf: 'center',
@@ -27,7 +25,17 @@ const styles = StyleSheet.create({
     paddingHorizontal: 0,
     paddingVertical: 15,
     borderRadius: 16,
-    marginTop: 48,
+    marginTop: 20,
+    marginBottom: 20,
+  },
+  buttonNextDisabled: {
+    alignSelf: 'center',
+    width: '100%',
+    backgroundColor: '#B0BEC5',
+    paddingHorizontal: 0,
+    paddingVertical: 15,
+    borderRadius: 16,
+    marginTop: 20,
     marginBottom: 20,
   },
   textNext: {
@@ -35,24 +43,6 @@ const styles = StyleSheet.create({
     fontFamily: 'boldIBM',
     color: '#fff',
     textAlign: 'center',
-  },
-  buttonBack: {
-    flexDirection: 'row',
-    bottom: '-15%',
-    justifyContent: 'center',
-  },
-  textBack: {
-    fontSize: 18,
-    fontFamily: 'boldIBM',
-    color: '#000',
-    textAlign: 'center',
-    marginLeft: 8,
-  },
-  registerText: {
-    fontFamily: 'ibmRegular',
-    fontSize: 16,
-    color: '#000000',
-    fontWeight: '600',
   },
   input: {
     height: 52,
@@ -64,22 +54,8 @@ const styles = StyleSheet.create({
     color: '#000000',
     fontSize: 16,
     fontFamily: 'ibmRegular',
+    marginBottom: 15,
   },
-  secondaryGuideText: {
-    fontFamily: 'ibmRegular',
-    fontSize: 16,
-    color: '#6C6C6C',
-  },
-  guideTextContainer: {
-    gap: 24,
-  },
-  inputContainer: {
-    gap: 8,
-  },
-  inputs: {
-    gap: 48,
-    marginTop: 48,
-  }
 });
 
 export default styles;
