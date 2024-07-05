@@ -87,3 +87,38 @@ export const transference = async (userData) => {
   }
 };
 
+export const getExpenses = async (userID) => {
+  try {
+    console.log('Iniciando solicitação de despesas para o usuário:', userID);
+    
+    const response = await axios.get(`${API_BASE_URL_USER}/expense/${userID}`, {
+        headers: {
+            'Content-Type': 'application/json'
+        }
+    });
+    
+    console.log('Resposta recebida:', response.data);
+    return response.data;
+  } catch (error) {
+    console.error('Erro ao recuperar despesas:', error);
+    throw error;
+  }
+};
+
+export const createExpense = async (userID, expenseData) => {
+  try {
+    console.log('Iniciando solicitação de criação de despesa para o usuário:', userID);
+    
+    const response = await axios.post(`${API_BASE_URL_USER}/expense/${userID}`, expenseData, {
+        headers: {
+            'Content-Type': 'application/json'
+        }
+    });
+    
+    console.log('Resposta recebida:', response.data);
+    return response.data;
+  } catch (error) {
+    console.error('Erro ao criar despesa:', error);
+    throw error;
+  }
+};

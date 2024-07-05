@@ -9,38 +9,31 @@ import KeyboardAvoidingWrapper from '../../components/KeyboardWrapper';
 
 // Import Context
 import { UserContext } from '../../context/userContext';
-import { TransctionContext } from '../../context/transactionContext';
 import logo from '../../../assets/logoTop.png';
+
+// Import API
+import { createExpense } from '../../services/api';
 
 // Interface
 const AddExpenseScreen = ({ navigation }) => {
+  const context = useContext(UserContext);
   const [name, onChangeName] = useState('');
 
   const [value, onChangeText] = useState('');
-  // const getEndToEndId = () => {
-  //   paymentsApi
-  //     .post(`/payment/prepare`)
-  //     .then((res) => {
-  //       transactionContext.setTransaction((transaction) => ({
-  //         ...transaction,
-  //         amount: value.replace('R$', ''),
-  //         endToEndId: res.data.endToEndID,
-  //         date: new Date(),
-  //         from: {
-  //           institution: 'Rigel',
-  //           agency: '0001',
-  //           id: userContext.id,
-  //           name: `User 00${userContext.id}`,
-  //           cpf: `0000000000${userContext.id}`,
-  //           account: `000000000${userContext.id}`,
-  //         },
-  //       }));
-  //       console.log(res);
-  //     })
-  //     .catch((err) => {
-  //       console.log(err);
-  //     });
-  // };
+  const handleCreateExpense = async (title, amount) => {
+    const expenseData = {
+      title: title,
+      amount: amount,
+    };
+
+    try {
+      const result = await createExpense(context.id, expenseData);
+      console.log('Despesa criada com sucesso:', result);
+    } catch (error) {
+      console.error('Erro ao criar despesa:', error);
+    }
+  };
+
   return (
     <KeyboardAvoidingWrapper>
       
@@ -86,8 +79,7 @@ const AddExpenseScreen = ({ navigation }) => {
         <TouchableOpacity
           style={styles.nextButton}
           onPress={() => {
-            navigation.navigate('DataReviewScreen');
-         
+            handleCreateExpense('titulo', 'valor');
           }}
         >
           <Text style={styles.nextText}>Avançar</Text>
