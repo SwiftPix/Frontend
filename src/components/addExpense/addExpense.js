@@ -22,8 +22,9 @@ const AddExpenseScreen = ({ navigation }) => {
   const [value, onChangeText] = useState('');
   const handleCreateExpense = async (title, amount) => {
     const expenseData = {
-      title: title,
-      amount: amount,
+      reason: title,
+      value: amount,
+      category: ""
     };
 
     try {
