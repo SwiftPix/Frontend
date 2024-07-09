@@ -1,5 +1,4 @@
-// Import React Components
-import React, { useState, useEffect, useContext } from 'react';
+import React, { useState, useEffect } from 'react';
 import {
   SafeAreaView,
   View,
@@ -7,145 +6,128 @@ import {
   Image,
   TouchableOpacity,
   ScrollView,
+  Alert,
+  Modal,
+  Button,
 } from 'react-native';
 import Icon from 'react-native-vector-icons/FontAwesome5';
-import { useIsFocused } from '@react-navigation/native';
+import { findUserById, getBalance, getExpenses } from '../../services/api'; // Importar funções do API
 import styles from './styles';
 
-// Import Component Hide Content
-import HideContent from '../../components/HomeScreenHideContent/HideContent';
-
-// Import APIs Back End
-import { balanceApi } from '../../services/api';
-import { UserContext } from '../../context/userContext';
-
-// Import Images
 import iconNotification from '../../../assets/notification.png';
 import iconSettings from '../../../assets/settings.png';
 import iconUser from '../../../assets/user.png';
 import iconPix from '../../../assets/pix.png';
 
-// Interface
-const HomeScreen = ({ navigation }) => {
-  const context = useContext(UserContext);
+const HomeScreen = ({ route, navigation }) => {
+  const { userId } = route.params; // Obter userId das props de navegação
+  const [user, setUser] = useState(null);
   const [balance, setBalance] = useState('');
   const [transactions, setTransactions] = useState([]);
-  const isFocused = useIsFocused();
-  const [shouldShow, setShouldShow] = useState(true);
+  const [showModal, setShowModal] = useState(false);
+  const [showBalance, setShowBalance] = useState(true); 
 
-  const toggleContentVisibility = () => {
-    setShouldShow(!shouldShow);
+  // Carregar dados ao montar o componente
+  useEffect(() => {
+    const fetchUserData = async () => {
+      try {
+        const userResponse = await findUserById(userId);
+        setUser(userResponse);
+
+        const balanceResponse = await getBalance(userId);
+        setBalance(balanceResponse.balance);
+
+        const transactionsResponse = await getExpenses(userId);
+        setTransactions(transactionsResponse);
+      } catch (error) {
+        console.error('Failed to load user data:', error);
+        Alert.alert('Erro', 'Não foi possível carregar os dados do usuário.');
+      }
+    };
+
+    if (userId) {
+      fetchUserData();
+    } else {
+      console.error('User ID não encontrado nas props de navegação');
+    }
+  }, [userId]);
+
+  const toggleModal = () => {
+    setShowModal(!showModal);
+  };
+
+  const toggleBalanceVisibility = () => {
+    setShowBalance(!showBalance);
   };
 
   return (
     <SafeAreaView style={styles.container}>
-      <View style={styles.header}>
-        <View style={styles.headerImagesContainer}>
-          <TouchableOpacity>
-            <Image style={styles.iconHeader} source={iconUser} />
-          </TouchableOpacity>
-          <View style={styles.headerImages}>
-          <TouchableOpacity
-                onPress={() => {
-                  functionA();
-                  functionB();
-                  <Icon
-                    name="eye"
-                    size={20}
-                    color='#fff'
-                    style={styles.iconHeader}
-                  />;
-                }}
-              >
-                <Icon
-                  name="eye-slash"
-                  size={20}
-                  color='#fff'
-                  style={styles.iconHeader}
-                />
-            </TouchableOpacity>
-            <TouchableOpacity
-              onPress={() => navigation.navigate('ExpensesScreen') }
-            >
-              <Icon
-                    name="coins"
-                    size={20}
-                    color='#fff'
-                    style={styles.iconHeader}
-              />
-            </TouchableOpacity>
-            <TouchableOpacity>
-              <Image style={styles.iconHeader} source={iconNotification} />
-            </TouchableOpacity>
-            <TouchableOpacity>
-              <Image style={styles.iconHeader} source={iconSettings} />
-            </TouchableOpacity>
-          </View>
+      <Modal
+        animationType="slide"
+        transparent={true}
+        visible={showModal}
+        onRequestClose={toggleModal}>
+        <View style={styles.modalView}>
+          <Text style={styles.modalText}>Escolha o tipo de chave para cadastro:</Text>
+          <Button title="CPF" onPress={() => { Alert.alert("CPF Registrado", "Seu CPF foi registrado."); toggleModal(); }} />
+          <Button title="Email" onPress={() => { Alert.alert("E-mail Registrado", "Seu e-mail foi registrado."); toggleModal(); }} />
+          <Button title="Telefone" onPress={() => { Alert.alert("Telefone Registrado", "Seu telefone foi registrado."); toggleModal(); }} />
+          <Button title="Gerar Chave Aleatória" onPress={() => { Alert.alert("Chave Aleatória", "Uma nova chave aleatória foi gerada e registrada."); toggleModal(); }} />
+          <Button title="Cancelar" onPress={toggleModal} />
         </View>
-        <Text style={styles.headerText}>Olá, usuário!</Text>
-      </View>
-      <View style={styles.body}>
-        <View style={styles.list}>
-          <View style={styles.balanceTitle}>
-            <Text style={styles.textBalance}>Saldo disponível</Text>
+      </Modal>
+      {user && (
+        <>
+          <View style={styles.header}>
+            <TouchableOpacity>
+              <Image style={styles.iconHeader} source={iconUser} />
+            </TouchableOpacity>
+            <Text style={styles.headerText}>Olá, {user.name}!</Text>
+            <View style={styles.headerIcons}>
+              <TouchableOpacity onPress={() => navigation.navigate('ExpensesScreen') }>
+                <Icon name="coins" size={20} color='#fff' style={styles.iconHeader} />
+              </TouchableOpacity>
+              <TouchableOpacity onPress={toggleModal}>
+                <Icon name="key" size={20} color='#fff' style={styles.iconHeader} />
+              </TouchableOpacity>
+              <TouchableOpacity>
+                <Image style={styles.iconHeader} source={iconNotification} />
+              </TouchableOpacity>
+            </View>
           </View>
-          {shouldShow ? (
-            <HideContent />
-          ) : (
-            <>
-              <Text style={styles.balance}>R$ {parseFloat(balance).toFixed(2)}</Text>
-              <View
-                style={{
-                  maxHeight: '50%',
-                  width: '90%',
-                  margin: 15,
-                }}
-              >
-                <ScrollView contentContainerStyle={styles.transactionsScroll}>
-                  {transactions.map((transaction) => {
-                    return (
-                      <TouchableOpacity
-                        style={styles.transactions}
-                        key={transaction.endToEndId}
-                      >
-                        <View style={styles.pixContainer}>
-                          <View style={styles.pixValueBox}>
-                            <Text style={styles.pixReciveSend}>
-                              {transaction.from.id === context.id
-                                ? 'Enviado'
-                                : 'Recebido'}{' '}
-                            </Text>
-                            <Text style={styles.pixValue}>
-                              R$ {transaction.amount}
-                            </Text>
-                          </View>
-                        </View>
-                        <View style={styles.pixDateBox}>
-                          <Text style={styles.pixDate}>
-                            {new Date(transaction.date).toLocaleDateString()}
-                          </Text>
-                        </View>
-                      </TouchableOpacity>
-                    );
-                  })}
-                </ScrollView>
+          <ScrollView contentContainerStyle={styles.body}>
+            <View style={styles.list}>
+              <View style={styles.balanceTitle}>
+                <Text style={styles.textBalance}>Saldo disponível</Text>
+                <TouchableOpacity onPress={toggleBalanceVisibility}>
+                  <Icon name={showBalance ? "eye" : "eye-slash"} size={30} color="#00A896" />
+                </TouchableOpacity>
               </View>
-            </>
-          )}
-        </View>
-        <View style={styles.buttons}>
-          <TouchableOpacity
-            style={styles.pixBtn}
-            onPress={() => navigation.navigate('SelectKeyScreen')}
-          >
-            <Image style={styles.pixLogo} source={iconPix} />
-            <Text style={styles.pixText}>Transferir por Pix</Text>
-          </TouchableOpacity>
-          <View style={styles.btnContainer}>
-            <View style={styles.btnRows}></View>
+              {showBalance ? (
+                <Text style={styles.balance}>R$ {balance},00</Text>
+              ) : (
+                <Text style={styles.balance}>***</Text>
+              )}
+              {transactions.length > 0 ? (
+                transactions.map((transaction, index) => (
+                  <View style={styles.transactionItem} key={index}>
+                    <Text>{transaction.reason} - R$ {transaction.value}</Text>
+                    <Text>{new Date(transaction.date).toLocaleDateString()}</Text>
+                  </View>
+                ))
+              ) : (
+                <Text>Sem transações recentes</Text>
+              )}
+            </View>
+          </ScrollView>
+          <View style={styles.buttons}>
+            <TouchableOpacity style={styles.pixBtn} onPress={() => navigation.navigate('SelectKeyScreen')}>
+              <Image style={styles.pixLogo} source={iconPix} />
+              <Text style={styles.pixText}>Transferir por Pix</Text>
+            </TouchableOpacity>
           </View>
-        </View>
-      </View>
+        </>
+      )}
     </SafeAreaView>
   );
 };

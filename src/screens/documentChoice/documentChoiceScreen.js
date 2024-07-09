@@ -41,6 +41,13 @@ const DocChoiceScreen = () => {
       return;
     }
 
+    // Verificação do formato do email
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    if (!emailRegex.test(email)) {
+      Alert.alert('Erro', 'Por favor, insira um email válido.');
+      return;
+    }
+
     setLoading(true);
     try {
       const userData = {
@@ -60,7 +67,26 @@ const DocChoiceScreen = () => {
     } catch (error) {
       setLoading(false);
       console.log('Erro ao criar usuário:', error);
-      const errorMessage = error.error || 'Não foi possível criar o usuário. Tente novamente.';
+
+      // Tratamento detalhado de erro
+      let errorMessage = 'Não foi possível criar o usuário. Tente novamente.';
+      if (error.response) {
+        // Erro retornado pelo servidor
+        if (error.response.data && typeof error.response.data === 'string') {
+          errorMessage = error.response.data;
+        } else if (error.response.data && error.response.data.error) {
+          errorMessage = error.response.data.error;
+        } else {
+          errorMessage = `Erro: ${error.response.status}`;
+        }
+      } else if (error.request) {
+        // Erro na requisição
+        errorMessage = 'Não foi possível se conectar ao servidor. Verifique sua conexão com a internet e tente novamente.';
+      } else {
+        // Outro tipo de erro
+        errorMessage = error.message;
+      }
+
       if (errorMessage.includes('já está cadastrado')) {
         Alert.alert('Erro', 'Usuário já está cadastrado.');
       } else {
@@ -104,7 +130,7 @@ const DocChoiceScreen = () => {
               placeholder="Celular"
               value={cellphone}
               onChangeText={setCellphone}
-              maxLength={8}  
+              maxLength={11}
             />
             <TextInput
               style={styles.input}

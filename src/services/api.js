@@ -1,124 +1,49 @@
 import axios from 'axios';
 
-const API_BASE_URL_USER = 'http://192.168.1.9:3000';
-const API_BASE_URL_TRANSFERENCE = 'http://192.168.1.9:5010';
-const API_BASE_URL_GEOLOC = 'http://192.168.1.9:5002';
-export const createUser = async (userData) => {
-  try {
-    console.log('Iniciando solicitação para criar usuário');
-    const response = await axios.post(`${API_BASE_URL_USER}/create`, userData, {
-      headers: {
-        'Content-Type': 'application/json'
-      },
-    });
-    console.log('Resposta recebida:', response.data);
-    return response.data;
-  } catch (error) {
-    console.log('Erro na solicitação:', error);
-    throw (error.response ? error.response.data : error.message);
-  }
-};
+const API_BASE_USER_URL = 'http://user-service.swiftpix.software';
+const API_BASE_TRANSFERENCE_URL = 'http://transference-service.swiftpix.software';
+const API_BASE_GEOLOC_URL = 'http://geoloc.swiftpix.software';
 
 export const loginUser = async (userData) => {
   try {
-      console.log('Iniciando solicitação de login:', userData);
-      const response = await axios.post(`${API_BASE_URL_USER}/login`, userData, {
-          headers: {
-              'Content-Type': 'application/json'
-          }
-      });
-      console.log('Resposta recebida:', response.data);
-      return response.data;
-  } catch (error) {
-      console.error('Erro ao fazer login:', error);
-      throw error;
-  }
-};
-
-
-export const curency = async (userData) => {
-  try {
-      console.log('Iniciando solicitação de login:', userData);
-      const response = await axios.post(`${API_BASE_URL_GEOLOC}/coords/currency`, userData, {
-          headers: {
-              'Content-Type': 'application/json'
-          }
-      });
-      console.log('Resposta recebida:', response.data);
-      return response.data;
-  } catch (error) {
-      console.error('Erro ao pegar moeda:', error);
-      throw error;
-  }
-};
-
-
-export const convertion = async (userData) => {
-  try {
-    console.log('Iniciando solicitação de login:', userData);
-    const response = await axios.post(`${API_BASE_URL_GEOLOC}/conversion`, userData, {
-        headers: {
-            'Content-Type': 'application/json'
-        }
-    });
-    console.log('Resposta recebida:', response.data);
-    return response.data;
-} catch (error) {
-    console.error('Erro ao fazer conversão:', error);
-    throw error;
-}
-};
-
-
-
-export const transference = async (userData) => {
-  try {
-      console.log('Iniciando solicitação de login:', userData);
-      const response = await axios.post(`${API_BASE_URL_TRANSFERENCE}/transference`, userData, {
-          headers: {
-              'Content-Type': 'application/json'
-          }
-      });
-      console.log('Resposta recebida:', response.data);
-      return response.data;
-  } catch (error) {
-      console.error('Erro ao fazer trasnferência', error);
-      throw error;
-  }
-};
-
-export const getExpenses = async (userID) => {
-  try {
-    console.log('Iniciando solicitação de despesas para o usuário:', userID);
-    
-    const response = await axios.get(`${API_BASE_URL_USER}/expense/${userID}`, {
-        headers: {
-            'Content-Type': 'application/json'
-        }
-    });
-    
+    const response = await axios.post(`${API_BASE_USER_URL}/login`, userData);
     console.log('Resposta recebida:', response.data);
     return response.data;
   } catch (error) {
-    console.error('Erro ao recuperar despesas:', error);
+    console.error('Erro ao fazer login:', error);
     throw error;
   }
 };
 
-export const createExpense = async (userID, expenseData) => {
+export const findUserById = async (userId) => {
   try {
-    console.log('Iniciando solicitação de criação de despesa para o usuário:', userID);
-    
-    const response = await axios.post(`${API_BASE_URL_USER}/expense/${userID}`, expenseData, {
-        headers: {
-            'Content-Type': 'application/json'
-        }
-    });
-    
-    console.log('Resposta recebida:', response.data);
+    const response = await axios.get(`${API_BASE_USER_URL}/user/${userId}`);
+    console.log('Detalhes do usuário recebidos:', response.data);
     return response.data;
   } catch (error) {
-    console.error('Erro ao criar despesa:', error);
+    console.error('Erro ao obter detalhes do usuário:', error);
+    throw error;
+  }
+};
+
+export const getBalance = async (userId) => {
+  try {
+    const response = await axios.get(`${API_BASE_URL}/balance/${userId}`);
+    console.log('Saldo do usuário recebido:', response.data);
+    return response.data;
+  } catch (error) {
+    console.error('Erro ao obter saldo do usuário:', error);
+    throw error;
+  }
+};
+
+export const getExpenses = async (userId) => {
+  try {
+    const response = await axios.get(`${API_BASE_USER_URL}/expenses/${userId}`);
+    console.log('Despesas do usuário recebidas:', response.data);
+    return response.data;
+  } catch (error) {
+    console.error('Erro ao obter despesas do usuário:', error);
     throw error;
   }
 };
