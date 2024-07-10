@@ -45,7 +45,7 @@ const FinishRegister = () => {
           setData={setData}
         />
       </Modal>
-      <Image style={styles.headerImg} source={logo} />
+      <Image style={styles.headerImg} source={logo} testID='logoTop'/>
       <Text style={styles.title}>
         Parabéns! Você concluiu todas as etapas e seus dados já estão sendo
         analisados

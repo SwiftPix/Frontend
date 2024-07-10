@@ -33,6 +33,7 @@ const ModalDocumentChoice = (props) => {
       >
         <TouchableOpacity
           style={styles.closeButton}
+          testID="closeButton"
           onPress={() => closeModal(false, 'Cancel')}
         >
           <Icon
@@ -56,6 +57,7 @@ const ModalDocumentChoice = (props) => {
         <View style={styles.line} />
         <TouchableOpacity
           style={styles.doneButton}
+          testID="doneButton"
           onPress={() => {
             closeModal(false, 'Cancel');
             navigation.navigate('Biometrics');

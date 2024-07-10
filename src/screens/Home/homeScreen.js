@@ -42,7 +42,7 @@ const HomeScreen = ({ navigation }) => {
       <View style={styles.header}>
         <View style={styles.headerImagesContainer}>
           <TouchableOpacity>
-            <Image style={styles.iconHeader} source={iconUser} />
+            <Image style={styles.iconHeader} source={iconUser} testID='UserIcon' />
           </TouchableOpacity>
           <View style={styles.headerImages}>
             <TouchableOpacity onPress={toggleContentVisibility}>

@@ -14,6 +14,7 @@ const styles = StyleSheet.create({
     top: '5%',
     left: '43%',
     position: 'absolute',
+    top: '4%',
   },
   title: {
     color: '#000',
