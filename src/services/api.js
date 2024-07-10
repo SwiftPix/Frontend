@@ -28,7 +28,7 @@ export const findUserById = async (userId) => {
 
 export const getBalance = async (userId) => {
   try {
-    const response = await axios.get(`${API_BASE_URL}/balance/${userId}`);
+    const response = await axios.get(`${API_BASE_USER_URL}/balance/${userId}`);
     console.log('Saldo do usuário recebido:', response.data);
     return response.data;
   } catch (error) {
@@ -44,6 +44,20 @@ export const getExpenses = async (userId) => {
     return response.data;
   } catch (error) {
     console.error('Erro ao obter despesas do usuário:', error);
+    throw error;
+  }
+};
+
+export const getCurrency = async (latitude, longitude) => {
+  try {
+    const response = await axios.post(`${API_BASE_GEOLOC_URL}/currency`, {
+      latitude: latitude.toString(),
+      longitude: longitude.toString()
+    });
+    console.log('Moeda recebida:', response.data);
+    return response.data.currency;
+  } catch (error) {
+    console.error('Erro ao obter moeda:', error);
     throw error;
   }
 };

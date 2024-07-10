@@ -21,8 +21,6 @@ const styles = StyleSheet.create({
   headerIcons: {
     flexDirection: 'row',
     justifyContent: 'flex-end',
-    
-
   },
   iconHeader: {
     width: 32,
@@ -55,7 +53,7 @@ const styles = StyleSheet.create({
     borderBottomColor: '#eee',
   },
   buttons: {
-    padding: 26,
+    padding: 16,
     alignItems: 'center',
   },
   pixBtn: {
@@ -73,6 +71,73 @@ const styles = StyleSheet.create({
   pixText: {
     color: '#fff',
     fontSize: 16,
+  },
+  modalContainer: {
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
+    backgroundColor: 'rgba(0, 0, 0, 0.5)',
+  },
+  modalContent: {
+    width: '90%',
+    backgroundColor: '#fff',
+    borderRadius: 8,
+    padding: 20,
+    alignItems: 'center',
+  },
+  modalTitle: {
+    fontSize: 24,
+    fontWeight: 'bold',
+    marginBottom: 10,
+  },
+  modalSubtitle: {
+    fontSize: 16,
+    color: '#666',
+    marginBottom: 20,
+    textAlign: 'center',
+  },
+  modalButton: {
+    backgroundColor: '#00B386',
+    borderRadius: 8,
+    paddingVertical: 12,
+    paddingHorizontal: 20,
+    marginBottom: 20,
+  },
+  modalButtonText: {
+    color: '#fff',
+    fontSize: 16,
+    fontWeight: 'bold',
+  },
+  modalInfoContainer: {
+    width: '100%',
+    marginBottom: 20,
+    alignItems: 'center',
+  },
+  modalInfoText: {
+    fontSize: 18,
+    fontWeight: 'bold',
+  },
+  modalInfoDescription: {
+    fontSize: 14,
+    color: '#666',
+    textAlign: 'center',
+  },
+  modalKeyItem: {
+    width: '100%',
+    flexDirection: 'row',
+    alignItems: 'center',
+    padding: 10,
+    borderBottomWidth: 1,
+    borderBottomColor: '#eee',
+  },
+  modalKeyText: {
+    fontSize: 16,
+    marginLeft: 10,
+  },
+  modalKeyValue: {
+    fontSize: 16,
+    marginLeft: 'auto',
+    color: '#666',
   },
   modalView: {
     margin: 20,
@@ -92,8 +157,6 @@ const styles = StyleSheet.create({
   modalText: {
     marginBottom: 15,
     textAlign: 'center',
-    color: '#000',
-    fontSize: 18,
   },
 });
 
