@@ -11,7 +11,7 @@ import {
   Button,
 } from 'react-native';
 import Icon from 'react-native-vector-icons/FontAwesome5';
-import Geolocation from 'react-native-geolocation-service';
+import * as Location from 'expo-location';
 import { findUserById, getBalance, getExpenses, getCurrency } from '../../services/api'; // Importar funções do API
 import styles from './styles';
 
@@ -26,11 +26,6 @@ const HomeScreen = ({ route, navigation }) => {
   const [balance, setBalance] = useState('');
   const [transactions, setTransactions] = useState([]);
   const [showModal, setShowModal] = useState(false);
-  const [showBalance, setShowBalance] = useState(true); // Estado para controlar a visibilidade do saldo
-  const [showKeyModal, setShowKeyModal] = useState(false); // Estado para controlar o modal de gerenciamento de chaves
-  const [selectedKey, setSelectedKey] = useState(null); // Estado para controlar a chave selecionada para gerenciamento
-  const [location, setLocation] = useState({ latitude: null, longitude: null }); // Estado para a localização
-  const [currency, setCurrency] = useState(null);
 
   // Carregar dados ao montar o componente
   useEffect(() => {
@@ -56,6 +51,41 @@ const HomeScreen = ({ route, navigation }) => {
       console.error('User ID não encontrado nas props de navegação');
     }
   }, [userId]);
+
+  useEffect(() => {
+    const requestLocationPermission = async () => {
+      try {
+        // Solicitar permissão para localização
+        let { status } = await Location.requestForegroundPermissionsAsync();
+        if (status !== 'granted') {
+          Alert.alert('Permissão de localização negada');
+          return;
+        }
+
+        // Obter localização atual
+        let location = await Location.getCurrentPositionAsync({});
+        const { latitude, longitude } = location.coords;
+        setLocation({ latitude, longitude });
+
+        try {
+          // Obter moeda com base na latitude e longitude
+          const currencyResponse = await getCurrency(latitude, longitude);
+          setCurrency(currencyResponse);
+        } catch (error) {
+          console.error('Erro ao obter moeda:', error);
+          Alert.alert('Erro', 'Não foi possível obter a moeda.');
+        }
+      } catch (error) {
+        console.error('Erro ao obter localização:', error);
+        Alert.alert('Erro', 'Não foi possível obter a localização.');
+      }
+    };
+
+    requestLocationPermission();
+  }, []);
+
+
+  
 
   useEffect(() => {
     const requestLocationPermission = async () => {
@@ -180,7 +210,7 @@ const HomeScreen = ({ route, navigation }) => {
             </TouchableOpacity>
             <Text style={styles.headerText}>Olá, {user.name}!</Text>
             <View style={styles.headerIcons}>
-              <TouchableOpacity>
+              <TouchableOpacity onPress={() => navigation.navigate('ExpensesScreen') }>
                 <Icon name="coins" size={20} color='#fff' style={styles.iconHeader} />
               </TouchableOpacity>
               <TouchableOpacity onPress={toggleModal}>
@@ -196,7 +226,7 @@ const HomeScreen = ({ route, navigation }) => {
               <View style={styles.balanceTitle}>
                 <Text style={styles.textBalance}>Saldo disponível</Text>
                 <TouchableOpacity onPress={toggleBalanceVisibility}>
-                  <Icon name={showBalance ? "eye" : "eye-slash"} size={20} color="#000" />
+                  <Icon name={showBalance ? "eye" : "eye-slash"} size={30} color="#00A896" />
                 </TouchableOpacity>
               </View>
               {showBalance ? (
@@ -206,8 +236,7 @@ const HomeScreen = ({ route, navigation }) => {
               )}
               {transactions.length > 0 ? (
                 transactions.map((transaction, index) => (
-                 
-          <View style={styles.transactionItem} key={index}>
+                  <View style={styles.transactionItem} key={index}>
                     <Text>{transaction.reason} - R$ {transaction.value}</Text>
                     <Text>{new Date(transaction.date).toLocaleDateString()}</Text>
                   </View>
@@ -222,10 +251,6 @@ const HomeScreen = ({ route, navigation }) => {
               <Image style={styles.pixLogo} source={iconPix} />
               <Text style={styles.pixText}>Transferir por Pix</Text>
             </TouchableOpacity>
-          </View>
-          <View style={styles.locationContainer}>
-            <Text style={styles.locationText}>Latitude: {location.latitude}</Text>
-            <Text style={styles.locationText}>Longitude: {location.longitude}</Text>
           </View>
         </>
       )}
