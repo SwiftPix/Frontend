@@ -26,6 +26,11 @@ const HomeScreen = ({ route, navigation }) => {
   const [balance, setBalance] = useState('');
   const [transactions, setTransactions] = useState([]);
   const [showModal, setShowModal] = useState(false);
+  const [showBalance, setShowBalance] = useState(false);
+  const [selectedKey, setSelectedKey] = useState('');
+  const [showKeyModal, setShowKeyModal] = useState('');
+  const [location, setLocation] = useState(null);
+  const [currency, setCurrency] = useState('');
 
   // Carregar dados ao montar o componente
   useEffect(() => {
@@ -83,46 +88,6 @@ const HomeScreen = ({ route, navigation }) => {
 
     requestLocationPermission();
   }, []);
-
-
-  
-
-  useEffect(() => {
-    const requestLocationPermission = async () => {
-      try {
-        const granted = await Geolocation.requestAuthorization('whenInUse');
-        if (granted === 'granted') {
-          Geolocation.getCurrentPosition(
-            async(position) => {
-              const { latitude, longitude } = position.coords;
-              setLocation({ latitude, longitude });
-              try {
-                const currencyResponse = await getCurrency(latitude, longitude);
-                setCurrency(currencyResponse);
-              } catch (error) {
-                console.error('Erro ao obter moeda:', error);
-                Alert.alert('Erro', 'Não foi possível obter a moeda.');
-              }
-            },
-            (error) => {
-              console.error(error);
-              Alert.alert('Erro', 'Não foi possível obter a localização.');
-            },
-            { enableHighAccuracy: true, timeout: 15000, maximumAge: 10000 }
-          );
-        } else {
-          Alert.alert('Permissão de localização negada');
-        }
-      } catch (error) {
-        console.error(error);
-      }
-    };
-
-    requestLocationPermission();
-  }, []);
-
-
-  
 
   const toggleModal = () => {
     setShowModal(!showModal);
@@ -188,8 +153,8 @@ const HomeScreen = ({ route, navigation }) => {
             <TouchableOpacity style={styles.modalCloseButton} onPress={() => toggleKeyModal()}>
               <Icon name="times" size={20} color="#000" />
             </TouchableOpacity>
-            <Text style={styles.modalKeyTitle}>{selectedKey}</Text>
-            <Text style={styles.modalKeyValue}>{selectedKey === 'CPF' ? '999.999.999-00' : 'matt@email.com'}</Text>
+            {/* <Text style={styles.modalKeyTitle}>{selectedKey}</Text> */}
+            {/* <Text style={styles.modalKeyValue}>{selectedKey === 'CPF' ? '999.999.999-00' : 'matt@email.com'}</Text> */}
             <TouchableOpacity style={styles.modalKeyAction} onPress={() => { /* Lógica para compartilhar chave */ }}>
               <Icon name="share-alt" size={20} color="#000" />
               <Text style={styles.modalKeyActionText}>Compartilhar chave</Text>

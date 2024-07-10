@@ -50,11 +50,7 @@ export const getExpenses = async (userId) => {
 
 export const getCurrency = async (latitude, longitude) => {
   try {
-<<<<<<< HEAD
-    const response = await axios.post(`${API_BASE_GEOLOC_URL}/currency`, {
-=======
     const response = await axios.post(`${API_BASE_GEOLOC_URL}/coords/currency`, {
->>>>>>> 4bc6d2b6e5d1bb664fdf4f85b1eb5ea7395f779b
       latitude: latitude.toString(),
       longitude: longitude.toString()
     });

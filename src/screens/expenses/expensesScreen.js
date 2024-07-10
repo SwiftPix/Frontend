@@ -58,6 +58,7 @@ const ExpensesScreen = ({ navigation }) => {
               >
                 <ScrollView contentContainerStyle={styles.transactionsScroll}>
                   {expenses.map((expense) => {
+                    console.log(expenses)
                     return (
                       <TouchableOpacity
                         style={styles.transactions}
@@ -66,7 +67,7 @@ const ExpensesScreen = ({ navigation }) => {
                         <View style={styles.pixContainer}>
                           <View style={styles.pixValueBox}>
                             <Text style={styles.pixReciveSend}>
-                              {expense.from.id === context.id
+                              {expense.id === context.id
                                 ? 'Enviado'
                                 : 'Recebido'}{' '}
                             </Text>
