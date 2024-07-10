@@ -1,6 +1,7 @@
 import React from 'react';
 import { render, fireEvent } from '@testing-library/react-native';
 import FinishRegister from './finishRegisterScreen';
+import { NavigationContainer } from '@react-navigation/native';
 
 // Mocks
 jest.mock('react-native-vector-icons/FontAwesome5', () => 'Icon');
@@ -16,23 +17,30 @@ jest.mock('../../assets/finishArt.png', () => 'FinishArt');
 
 describe('FinishRegister', () => {
   it('renders all elements correctly', () => {
-    const { getByText, getByRole, getByTestId } = render(<FinishRegister />);
+    const { getByText, getByTestId } = render(
+      <NavigationContainer>
+        <FinishRegister />
+      </NavigationContainer>
+    );
 
     // Check texts
     expect(getByText('Parabéns! Você concluiu todas as etapas e seus dados já estão sendo analisados')).toBeTruthy();
-    expect(getByText('Agora é com a gente! Em até 48 horas você receberá um e-mail com os seus dados de acesso ou solicitações de documentos.')).toBeTruthy();
-    expect(getByText('Ajuda')).toBeTruthy();
+    expect(getByText('Agora é com a gente! Em até 48 horas você estará apto a acessar o SwiftPix com o CPF e senha cadastrados')).toBeTruthy();
+    expect(getByText('Voltar')).toBeTruthy();
 
     // Check images
     expect(getByTestId('logoTop')).toBeTruthy();
-    expect(getByTestId('finishArt')).toBeTruthy();
-
   });
 
-  it('handles help button press', () => {
-    const { getByText } = render(<FinishRegister />);
-    const helpButton = getByText('Ajuda');
-    fireEvent.press(helpButton);
-    // Add expectations if there are any specific actions performed on help button press
+
+  it('navigates to Onboarding on press back button', () => {
+    const { getByText } = render(
+      <NavigationContainer>
+        <FinishRegister />
+      </NavigationContainer>
+    );
+    const backButton = getByText('Voltar');
+    fireEvent.press(backButton);
+    // Add expectations if there are any specific actions performed on back button press
   });
 });

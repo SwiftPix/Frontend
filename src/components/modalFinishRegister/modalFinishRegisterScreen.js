@@ -27,6 +27,7 @@ const ModalFinishRegis = () => {
           <TouchableOpacity
             style={styles.closeButton}
             onPress={closeModal}
+            testID="closeButton"
           >
             <Icon
               name="times"

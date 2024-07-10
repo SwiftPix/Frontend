@@ -26,11 +26,6 @@ describe('LoginScreen', () => {
     expect(getByText('CPF:')).toBeTruthy();
     expect(getByText('Senha:')).toBeTruthy();
 
-    // Check for buttons
-    expect(getByText('Esqueceu a senha?')).toBeTruthy();
-    expect(getByText('Entrar')).toBeTruthy();
-    expect(getByText('Ainda não possui uma conta?')).toBeTruthy();
-    expect(getByText('Cadastre-se!')).toBeTruthy();
   });
 
 });

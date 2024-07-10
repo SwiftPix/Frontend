@@ -122,6 +122,7 @@ const DocChoiceScreen = () => {
             <TouchableOpacity
               style={isFormValid ? styles.buttonNext : styles.buttonNextDisabled}
               onPress={handleRegister}
+              testID="nextButton"
               disabled={!isFormValid}
             >
               <Text style={styles.textNext}>Avançar</Text>

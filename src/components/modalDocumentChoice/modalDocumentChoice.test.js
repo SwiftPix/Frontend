@@ -1,5 +1,5 @@
 import React from 'react';
-import { render, fireEvent } from '@testing-library/react-native';
+import { render, fireEvent, waitFor } from '@testing-library/react-native';
 import ModalDocumentChoice from './modalDocumentChoice';
 
 // Mocking the navigation object
@@ -12,38 +12,47 @@ jest.mock('@react-navigation/native', () => ({
 }));
 
 describe('ModalDocumentChoice', () => {
+  const mockChangeModalVisible = jest.fn();
+  const mockSetData = jest.fn();
+
+  beforeEach(() => {
+    mockChangeModalVisible.mockClear();
+    mockSetData.mockClear();
+    mockNavigate.mockClear();
+  });
+
   it('renders correctly', () => {
-    const mockChangeModalVisible = jest.fn();
-    const mockSetData = jest.fn();
     const { getByText } = render(
       <ModalDocumentChoice changeModalVisible={mockChangeModalVisible} setData={mockSetData} />
     );
 
-    expect(getByText('Para continuar, tire uma foto da frente do seu RG, CNH ou RNE')).toBeTruthy();
+    expect(getByText('Para continuar, tire uma foto sua')).toBeTruthy();
   });
 
-  it('closes modal on press close button', () => {
-    const mockChangeModalVisible = jest.fn();
-    const mockSetData = jest.fn();
+  it('closes modal on press close button', async () => {
     const { getByTestId } = render(
       <ModalDocumentChoice changeModalVisible={mockChangeModalVisible} setData={mockSetData} />
     );
 
     fireEvent.press(getByTestId('closeButton'));
-    expect(mockChangeModalVisible).toHaveBeenCalledWith(false);
-    expect(mockSetData).toHaveBeenCalledWith('Cancel');
+    
+    await waitFor(() => {
+      expect(mockChangeModalVisible).toHaveBeenCalledWith(false);
+      expect(mockSetData).toHaveBeenCalledWith('Cancel');
+    });
   });
 
-  it('navigates to FinishRegister on done button press', () => {
-    const mockChangeModalVisible = jest.fn();
-    const mockSetData = jest.fn();
+  it('navigates to Biometrics on done button press', async () => {
     const { getByTestId } = render(
       <ModalDocumentChoice changeModalVisible={mockChangeModalVisible} setData={mockSetData} />
     );
 
     fireEvent.press(getByTestId('doneButton'));
-    expect(mockChangeModalVisible).toHaveBeenCalledWith(false);
-    expect(mockSetData).toHaveBeenCalledWith('Cancel');
-    expect(mockNavigate).toHaveBeenCalledWith('FinishRegister');
+    
+    await waitFor(() => {
+      expect(mockChangeModalVisible).toHaveBeenCalledWith(false);
+      expect(mockSetData).toHaveBeenCalledWith('Cancel');
+      expect(mockNavigate).toHaveBeenCalledWith('Biometrics');
+    });
   });
 });
