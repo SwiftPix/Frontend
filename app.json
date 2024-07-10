@@ -31,7 +31,8 @@
       },
       "package": "com.anonymous.SwiftPix",
       "permissions": [
-        "android.permission.CAMERA"
+        "CAMERA",
+        "ACCESS_FINE_LOCATION"
       ]
     },
     "web": {
