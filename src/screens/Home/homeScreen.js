@@ -24,90 +24,55 @@ import iconNotification from '../../../assets/notification.png';
 import iconSettings from '../../../assets/settings.png';
 import iconUser from '../../../assets/user.png';
 import iconPix from '../../../assets/pix.png';
-import iconKey from '../../../assets/key.png';
-import iconCrow from '../../../assets/crown.png';
 
 // Interface
 const HomeScreen = ({ navigation }) => {
   const context = useContext(UserContext);
   const [balance, setBalance] = useState('');
-  const [transactions, setTransactions] = useState('');
+  const [transactions, setTransactions] = useState([]);
   const isFocused = useIsFocused();
-
-  useEffect(() => {
-    balanceApi
-      .get(`/${context.id}`)
-      .then((res) => {
-        setBalance(res.data.BALANCECUSTOMER);
-        context.setBalance(res.data.BALANCECUSTOMER);
-        console.log(res.data);
-      })
-      .catch((err) => {
-        console.log(err);
-      });
-    balanceApi
-      .get(`/transactions/latest/${context.id}`)
-      .then((res) => {
-        setTransactions(res.data);
-        console.log(res.data);
-      })
-      .catch((err) => {
-        console.log(err);
-      });
-  }, [isFocused]);
   const [shouldShow, setShouldShow] = useState(true);
-  const functionA = () => {
+
+  const toggleContentVisibility = () => {
     setShouldShow(!shouldShow);
   };
-  const functionB = () => {
-    return <Icon name="eye" size={25} color="#000" style={styles.iconHide} />;
-  };
+
   return (
     <SafeAreaView style={styles.container}>
       <View style={styles.header}>
-        <View style={styles.headerImages}>
-          <TouchableOpacity>
-            <Image style={styles.iconHeader} source={iconNotification} testID='NotificationIcon'/>
-          </TouchableOpacity>
-
-          <TouchableOpacity>
-            <Image style={styles.iconHeader} source={iconSettings} testID='SettingsIcon'/>
-          </TouchableOpacity>
+        <View style={styles.headerImagesContainer}>
           <TouchableOpacity>
             <Image style={styles.iconHeader} source={iconUser} testID='UserIcon' />
           </TouchableOpacity>
+          <View style={styles.headerImages}>
+            <TouchableOpacity onPress={toggleContentVisibility}>
+              <Icon
+                name={shouldShow ? "eye-slash" : "eye"}
+                size={20}
+                color='#fff'
+                style={styles.iconHeader}
+              />
+            </TouchableOpacity>
+            <TouchableOpacity>
+              <Image style={styles.iconHeader} source={iconNotification} />
+            </TouchableOpacity>
+            <TouchableOpacity>
+              <Image style={styles.iconHeader} source={iconSettings} />
+            </TouchableOpacity>
+          </View>
         </View>
-        <Text style={styles.headerText}>Olá, usuário {context.id}</Text>
+        <Text style={styles.headerText}>Olá, usuário!</Text>
       </View>
       <View style={styles.body}>
         <View style={styles.list}>
           <View style={styles.balanceTitle}>
             <Text style={styles.textBalance}>Saldo disponível</Text>
-            <TouchableOpacity
-              onPress={() => {
-                functionA();
-                functionB();
-                <Icon
-                  name="eye"
-                  size={25}
-                  color="#000"
-                  style={styles.iconHide}
-                />;
-              }}
-            >
-              <Icon
-                name="eye-slash"
-                size={25}
-                color="#000"
-                style={styles.iconHide}
-              />
-            </TouchableOpacity>
           </View>
           {shouldShow ? (
             <HideContent />
           ) : (
             <>
-              <Text style={styles.balance}>R$ {balance.toFixed(2)}</Text>
+              <Text style={styles.balance}>R$ {parseFloat(balance).toFixed(2)}</Text>
               <View
                 style={{
                   maxHeight: '50%',
@@ -146,19 +111,6 @@ const HomeScreen = ({ navigation }) => {
               </View>
             </>
           )}
-
-          <TouchableOpacity
-            onPress={() => navigation.navigate('StatementScreen')}
-            style={styles.statementButton}
-          >
-            <Text style={styles.statementText}>Ver Extrato</Text>
-            <Icon
-              name="chevron-right"
-              size={25}
-              color="#414141"
-              style={styles.iconNext}
-            />
-          </TouchableOpacity>
         </View>
         <View style={styles.buttons}>
           <TouchableOpacity
@@ -166,21 +118,10 @@ const HomeScreen = ({ navigation }) => {
             onPress={() => navigation.navigate('SelectKeyScreen')}
           >
             <Image style={styles.pixLogo} source={iconPix} />
-            <Text style={styles.pixText}>Pagar por Pix</Text>
+            <Text style={styles.pixText}>Transferir por Pix</Text>
           </TouchableOpacity>
           <View style={styles.btnContainer}>
-            <View style={styles.btnRows}>
-              <TouchableOpacity style={styles.btnKeys}>
-                <Image style={styles.logo} source={iconKey} />
-                <Text style={styles.textKeys}>Minhas chaves</Text>
-              </TouchableOpacity>
-            </View>
-            <View style={styles.btnRows}>
-              <TouchableOpacity style={styles.btnKeys}>
-                <Image style={styles.logo} source={iconCrow} />
-                <Text style={styles.textKeys}>Meus favoritos</Text>
-              </TouchableOpacity>
-            </View>
+            <View style={styles.btnRows}></View>
           </View>
         </View>
       </View>

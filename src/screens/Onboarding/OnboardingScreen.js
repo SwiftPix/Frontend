@@ -49,6 +49,7 @@ const OnboardingScreen = ({ navigation }) => {
   const setData = (data) => {
     setChooseData(data);
   };
+
   return (
     <SafeAreaView style={styles.container}>
       <Image style={styles.logoTop} source={logoTop} />
@@ -126,7 +127,7 @@ const OnboardingScreen = ({ navigation }) => {
           navigation.navigate('LoadingAppScreen');
           setTimeout(() => {
             navigation.navigate('LoginScreen');
-          }, 4000);
+          }, 500);
         }}
       >
         <Text style={styles.textLogin}>Já tenho conta</Text>

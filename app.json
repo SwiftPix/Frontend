@@ -18,19 +18,40 @@
       "**/*"
     ],
     "ios": {
-      "supportsTablet": true
+      "supportsTablet": true,
+      "infoPlist": {
+        "NSCameraUsageDescription": "$(PRODUCT_NAME) needs access to your Camera."
+      },
+      "bundleIdentifier": "com.anonymous.SwiftPix"
     },
     "android": {
       "adaptiveIcon": {
         "foregroundImage": "./assets/appIcon.png",
         "backgroundColor": "#FFFFFF"
-      }
+      },
+      "package": "com.anonymous.SwiftPix",
+      "permissions": [
+        "android.permission.CAMERA"
+      ]
     },
     "web": {
       "favicon": "./assets/favicon.png"
     },
     "plugins": [
-      "expo-font"
-    ]
+      "expo-font",
+      [
+        "expo-camera",
+        {
+          "cameraPermission": "Allow $(PRODUCT_NAME) to access your camera",
+          "microphonePermission": "Allow $(PRODUCT_NAME) to access your microphone",
+          "recordAudioAndroid": true
+        }
+      ]
+    ],
+    "extra": {
+      "eas": {
+        "projectId": "bc5527c6-54ea-4782-99a8-9a0cbb45ba80"
+      }
+    }
   }
 }

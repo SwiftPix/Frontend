@@ -45,27 +45,22 @@ const ModalDocumentChoice = (props) => {
         </TouchableOpacity>
         <Image style={styles.imgTakePicture} source={takePicture} />
         <Text style={styles.title}>
-          Para continuar, tire uma foto da frente do seu RG, CNH ou RNE
+          Para continuar, tire uma foto sua 
         </Text>
         <Text style={styles.subtitles}>Instruções:</Text>
         <Text style={styles.topic}>
           • Tire uma foto em um local bem iluminado
         </Text>
         <Text style={styles.topic}>
-          • Para evitar reflexos, retire o documento do plástico
+          • Para evitar erros, tire a foto em um fundo branco 
         </Text>
         <View style={styles.line} />
-        <Text style={styles.description}>
-          Aceitamos apenas{' '}
-          <Text style={{ fontFamily: 'boldIBM' }}>RG, CNH ou RNE. </Text>
-          Qualquer outro documento não será aprovado na revisão
-        </Text>
         <TouchableOpacity
           style={styles.doneButton}
           testID="doneButton"
           onPress={() => {
             closeModal(false, 'Cancel');
-            navigation.navigate('FinishRegister');
+            navigation.navigate('Biometrics');
           }}
         >
           <Text style={styles.doneText}>Vamos lá</Text>

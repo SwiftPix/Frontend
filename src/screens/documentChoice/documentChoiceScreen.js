@@ -1,5 +1,3 @@
-/* eslint-disable no-unused-vars */
-// Import React Components
 import React, { useState } from 'react';
 import {
   SafeAreaView,
@@ -7,96 +5,131 @@ import {
   Text,
   Image,
   TouchableOpacity,
-  Modal,
+  Alert,
+  KeyboardAvoidingView,
+  Platform,
+  ScrollView,
+  TextInput
 } from 'react-native';
-import { RadioButton } from 'react-native-paper';
-import Icon from 'react-native-vector-icons/FontAwesome5';
-import styles from './styles';
-
-// Import Component
-import ModalDocumentChoice from '../../components/modalDocumentChoice/modalDocumentChoice';
-
-// Import images
+import { TextInputMask } from 'react-native-masked-text';
+import { useNavigation } from '@react-navigation/native';
+import LoadingAppScreen from '../loadingApp/loadingAppScreen';
 import logo from '../../../assets/logoTop.png';
+import styles from './styles';
+import { createUser } from '../../services/api';
 
-// Interface
-const DocChoiceScreen = ({ navigation }) => {
-  const [isModalVisible, setisModalVisible] = useState(false);
-  const [chooseData, setChooseData] = useState();
+const DocChoiceScreen = () => {
+  const navigation = useNavigation();
+  const [cpf, setCpf] = useState('');
+  const [cellphone, setCellphone] = useState('');
+  const [email, setEmail] = useState('');
+  const [name, setName] = useState('');
+  const [password, setPassword] = useState('');
+  const [loading, setLoading] = useState(false);
 
-  const changeModalVisible = (bool) => {
-    setisModalVisible(bool);
+  const handleRegister = async () => {
+    // Verificação dos campos obrigatórios
+    if (!name || !email || !cpf || !cellphone || !password) {
+      Alert.alert('Erro', 'Todos os campos são obrigatórios.');
+      return;
+    }
+
+    // Verificação do formato da senha
+    const passwordRegex = /^(?=.*[A-Z])(?=.*[!@#$&*])(?=.*[0-9]).{8,}$/;
+    if (!passwordRegex.test(password)) {
+      Alert.alert('Erro', 'A senha deve ter pelo menos 8 caracteres, uma letra maiúscula e um caractere especial.');
+      return;
+    }
+
+    setLoading(true);
+    try {
+      const userData = {
+        name,
+        email,
+        cpf,
+        cellphone,
+        password,
+      };
+      console.log('Enviando payload:', userData);
+      await createUser(userData);
+      Alert.alert('Sucesso', 'Usuário criado com sucesso!');
+      setTimeout(() => {
+        setLoading(false);
+        navigation.navigate('Biometrics');
+      }, 2000); // 2 segundos
+    } catch (error) {
+      setLoading(false);
+      console.log('Erro ao criar usuário:', error);
+      const errorMessage = error.error || 'Não foi possível criar o usuário. Tente novamente.';
+      if (errorMessage.includes('já está cadastrado')) {
+        Alert.alert('Erro', 'Usuário já está cadastrado.');
+      } else {
+        Alert.alert('Erro', errorMessage);
+      }
+    }
   };
-  const setData = (data) => {
-    setChooseData(data);
-  };
-  const [checked, setChecked] = useState('');
+
+  if (loading) {
+    return <LoadingAppScreen />;
+  }
+
+  const isFormValid = name && email && cpf && cellphone && password;
+
   return (
-    <SafeAreaView style={styles.container}>
-      <Image style={styles.headerImg} source={logo} />
-      <Text style={styles.guideText}>
-        Tire um foto da frente e verso do seu documento.
-      </Text>
-      <Text style={styles.description}>
-        Escolha qual dos documentos abaixo você deseja enviar.
-      </Text>
-      <Text style={styles.subtitle}>Documento</Text>
-      <View style={styles.radioButtons}>
-        <View style={{ flexDirection: 'row' }}>
-          <RadioButton
-            color="#00A896"
-            value="RG"
-            status={checked === 'RG' ? 'checked' : 'unchecked'}
-            onPress={() => setChecked('RG')}
-          />
-          <Text style={styles.typeDocument}>RG</Text>
-        </View>
-        <View style={{ flexDirection: 'row' }}>
-          <RadioButton
-            color="#00A896"
-            value="CNH"
-            status={checked === 'CNH' ? 'checked' : 'unchecked'}
-            onPress={() => setChecked('CNH')}
-          />
-          <Text style={styles.typeDocument}>CNH</Text>
-        </View>
-        <View style={{ flexDirection: 'row' }}>
-          <RadioButton
-            color="#00A896"
-            value="RNE"
-            status={checked === 'RNE' ? 'checked' : 'unchecked'}
-            onPress={() => setChecked('RNE')}
-          />
-          <Text style={styles.typeDocument}>RNE(estrangeiro)</Text>
-        </View>
-      </View>
-      <TouchableOpacity
-        style={styles.buttonNext}
-        onPress={() => changeModalVisible(true)}
-      >
-        <Text style={styles.textNext}>Avançar</Text>
-      </TouchableOpacity>
-      <Modal
-        transparent
-        animationType="fade"
-        visible={isModalVisible}
-        onRequestClose={() => changeModalVisible(false)}
-      >
-        <ModalDocumentChoice
-          changeModalVisible={changeModalVisible}
-          setData={setData}
-        />
-      </Modal>
-      <TouchableOpacity style={styles.buttonBack}>
-        <Icon
-          name="chevron-left"
-          size={25}
-          color="#000"
-          style={styles.iconBack}
-        />
-        <Text style={styles.textBack}>Voltar</Text>
-      </TouchableOpacity>
-    </SafeAreaView>
+    <KeyboardAvoidingView
+      behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
+      style={{ flex: 1 }}
+    >
+      <ScrollView contentContainerStyle={{ flexGrow: 1 }}>
+        <SafeAreaView style={styles.container}>
+          <View style={styles.logoView}>
+            <Image style={styles.headerImg} source={logo} />
+          </View>
+          <View style={styles.formView}>
+            <TextInput
+              style={styles.input}
+              placeholder="Nome"
+              value={name}
+              onChangeText={setName}
+            />
+            <TextInputMask
+              type={'cpf'}
+              value={cpf}
+              onChangeText={setCpf}
+              style={styles.input}
+              placeholder="CPF"
+            />
+            <TextInput
+              style={styles.input}
+              placeholder="Celular"
+              value={cellphone}
+              onChangeText={setCellphone}
+              maxLength={8}  
+            />
+            <TextInput
+              style={styles.input}
+              placeholder="Email"
+              value={email}
+              onChangeText={setEmail}
+            />
+            <TextInput
+              style={styles.input}
+              placeholder="Senha"
+              value={password}
+              secureTextEntry
+              onChangeText={setPassword}
+            />
+            <TouchableOpacity
+              style={isFormValid ? styles.buttonNext : styles.buttonNextDisabled}
+              onPress={handleRegister}
+              disabled={!isFormValid}
+            >
+              <Text style={styles.textNext}>Avançar</Text>
+            </TouchableOpacity>
+          </View>
+        </SafeAreaView>
+      </ScrollView>
+    </KeyboardAvoidingView>
   );
 };
 

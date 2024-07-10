@@ -4,6 +4,7 @@
 import {
   IBMPlexSans_400Regular,
   IBMPlexSans_700Bold,
+  IBMPlexSans_500Medium
 } from '@expo-google-fonts/ibm-plex-sans/';
 import AppLoading from 'expo-app-loading';
 import { useFonts } from 'expo-font';
@@ -17,11 +18,20 @@ import OnboardingScreen from './src/screens/Onboarding/OnboardingScreen';
 import LoginRegisScreen from './src/screens/LoginRegis/LoginRegisScreen';
 import LoginScreen from './src/screens/LoginScreen/LoginScreen';
 import HomeScreen from './src/screens/Home/homeScreen';
-import LoadingScreen from './src/screens/loading/loadingScreen';
 import LoadingAppScreen from './src/screens/loadingApp/loadingAppScreen';
 import DocChoiceScreen from './src/screens/documentChoice/documentChoiceScreen';
 import FinishRegister from './src/screens/finishRegister/finishRegisterScreen';
+import BiometricScreen from './src/screens/biometric/biometricScreen';
+import SelectKeyScreen from './src/screens/selectKey/selectKeyScreen';
+import StatementScreen from './src/screens/statement/statementScreen';
+import ValueTransferScreen from './src/screens/valueTransfer/valueTransferScreen';
+import DataReviewScreen from './src/screens/dataReview/dataReviewScreen';
+import ReceiptScreen from './src/screens/Receipt/ReceiptScreen';
 
+
+// Context imports
+import UserProvider from './src/context/userContext';
+import TransctionProvider from './src/context/transactionContext';
 
 const AppStack = createStackNavigator();
 
@@ -29,6 +39,7 @@ const App = () => {
   const [fontsLoaded] = useFonts({
     ibmRegular: IBMPlexSans_400Regular,
     boldIBM: IBMPlexSans_700Bold,
+    mediumIBM: IBMPlexSans_500Medium,
   });
   if (!fontsLoaded) {
     return <AppLoading />;
@@ -40,43 +51,42 @@ const App = () => {
       <AppStack.Navigator
             headerModel="none"
             screenOptions={{
-              headerTintColor: '#fff',
-              headerStyle: {
-                backgroundColor: '#0F61FD',
-              },
-              headerTitleStyle: {
-                fontFamily: 'boldIBM',
-                fontSize: 20,
-              },
-              headerTitleAlign: 'center',
+              headerTransparent: true,
+              title: null
             }}
           >
+            
             <AppStack.Screen
               name="Onboarding"
               component={OnboardingScreen}
-              options={{ headerShown: false }}
             />
 
             <AppStack.Screen
               name="LoginRegis"
               component={LoginRegisScreen}
-              options={{ headerShown: false }}
+            />
+
+            <AppStack.Screen
+              name="DataReviewScreen"
+              component={DataReviewScreen}
+            />
+            <AppStack.Screen
+              name="Biometrics"
+              component={BiometricScreen}
             />
             <AppStack.Screen
               name="LoginScreen"
               component={LoginScreen}
-              options={{ headerShown: false }}
+            />
+               <AppStack.Screen
+              name="FinishRegister"
+              component={FinishRegister}
             />
             <AppStack.Screen
               name="HomeScreen"
               component={HomeScreen}
-              options={{ headerShown: false }}
-            />
-            <AppStack.Screen
-              name="LoadingScreen"
-              component={LoadingScreen}
               options={{
-                headerShown: false,
+                headerShown: false
               }}
             />
             <AppStack.Screen
@@ -89,17 +99,25 @@ const App = () => {
              <AppStack.Screen
               name="DocChoiceScreen"
               component={DocChoiceScreen}
-              options={{
-                headerShown: false,
-              }}
+            />
+             <AppStack.Screen
+              name="SelectKeyScreen"
+              component={SelectKeyScreen}
+            />
+               <AppStack.Screen
+              name="ValueTransferScreen"
+              component={ValueTransferScreen}
             />
             <AppStack.Screen
-              name="FinishRegister"
-              component={FinishRegister}
-              options={{
-                headerShown: false,
-              }}
+              name="ReceiptScreen"
+              component={ReceiptScreen}
             />
+             <AppStack.Screen
+              name="StatementScreen"
+              component={StatementScreen}
+            />
+          
+         
           </AppStack.Navigator>
     </NavigationContainer>
   );

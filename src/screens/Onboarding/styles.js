@@ -13,7 +13,7 @@ const styles = StyleSheet.create({
     top: '2%',
   },
   welcomeImgs: {
-    height: 379,
+    height: 360,
     width: 379,
     resizeMode: 'contain',
   },
@@ -21,7 +21,6 @@ const styles = StyleSheet.create({
     color: '#000',
     fontFamily: 'boldIBM',
     fontSize: 32,
-    top: -45,
   },
   subtitle: {
     color: '#6C6C6C',
@@ -30,7 +29,6 @@ const styles = StyleSheet.create({
     paddingLeft: 10,
     paddingRight: 10,
     textAlign: 'center',
-    top: -30,
   },
   buttons: {
     justifyContent: 'center',

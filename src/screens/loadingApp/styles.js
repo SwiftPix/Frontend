@@ -5,16 +5,16 @@ const styles = StyleSheet.create({
     flex: 1,
     alignItems: 'center',
     justifyContent: 'center',
-    backgroundColor: '#F4F4F4',
+    backgroundColor: '#FFFFF',
   },
   logo: {
-    width: 60,
-    height: 60,
+    width: '30%',
+    height: '30%',
     resizeMode: 'contain',
   },
   byIbmContent: {
     flexDirection: 'row',
-    bottom: '-65%',
+    bottom: '-20%',
   },
   textBy: {
     fontFamily: 'ibmRegular',

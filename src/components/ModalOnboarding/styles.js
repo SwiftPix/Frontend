@@ -15,7 +15,8 @@ const styles = StyleSheet.create({
   imgSecurity: {
     width: 75,
     height: 75,
-    resizeMode: 'center',
+    resizeMode: 'contain',
+    marginBottom: 24,
     alignSelf: 'center',
     marginTop: '3%',
   },
@@ -58,12 +59,14 @@ const styles = StyleSheet.create({
   },
   doneButton: {
     alignSelf: 'center',
-    width: '85%',
+    width: '100%',
     backgroundColor: '#00A896',
     paddingHorizontal: 0,
     paddingVertical: 15,
     borderRadius: 16,
-    bottom: '-13%',
+    position: 'absolute',
+    bottom: 0,
+    marginBottom: 40
   },
   doneText: {
     fontSize: 20,

@@ -1,5 +1,3 @@
-/* eslint-disable no-unused-vars */
-// Import React Components
 import React, { useState } from 'react';
 import {
   SafeAreaView,
@@ -11,6 +9,7 @@ import {
 } from 'react-native';
 import Icon from 'react-native-vector-icons/FontAwesome5';
 import styles from './styles';
+import { useNavigation } from '@react-navigation/native';
 
 // Import Component
 import ModalFinishRegis from '../../components/modalFinishRegister/modalFinishRegisterScreen';
@@ -20,7 +19,8 @@ import logo from '../../../assets/logoTop.png';
 import finishArt from '../../assets/finishArt.png';
 
 // Interface
-const FinishRegister = ({ navigation }) => {
+const FinishRegister = () => {
+  const navigation = useNavigation();
   const [isModalVisible, setisModalVisible] = useState(true);
   const [chooseData, setChooseData] = useState();
 
@@ -31,6 +31,7 @@ const FinishRegister = ({ navigation }) => {
     setChooseData(data);
   };
   const [checked, setChecked] = useState('');
+
   return (
     <SafeAreaView style={styles.container}>
       <Modal
@@ -54,18 +55,20 @@ const FinishRegister = ({ navigation }) => {
         <Text style={{ fontFamily: 'boldIBM', color: '#000' }}>
           Em até 48 horas
         </Text>{' '}
-        você receberá um e-mail com os seus dados de acesso ou solicitações de
-        documentos.
+        você estará apto a acessar o SwiftPix com o CPF e senha cadastrados
       </Text>
-      <Image style={styles.imgFinishArt} source={finishArt} testID='finishArt' />
-      <TouchableOpacity style={styles.buttonHelp}>
-        <Text style={styles.textHelp}>Ajuda</Text>
+      <Image style={styles.imgFinishArt} source={finishArt} />
+      <TouchableOpacity 
+        style={styles.buttonBack} 
+        onPress={() => navigation.navigate('Onboarding')}
+      >
         <Icon
-          name="question-circle"
-          size={20}
+          name="chevron-left"
+          size={25}
           color="#000"
-          style={styles.iconQuestion}
+          style={styles.iconBack}
         />
+        <Text style={styles.textBack}>Voltar</Text>
       </TouchableOpacity>
     </SafeAreaView>
   );

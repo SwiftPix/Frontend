@@ -9,17 +9,20 @@ const styles = StyleSheet.create({
   },
   headerImg: {
     resizeMode: 'contain',
-    width: 100,
-    height: 100,
+    width: 60,
+    height: 60,
+    top: '5%',
+    left: '43%',
     position: 'absolute',
     top: '4%',
   },
   title: {
     color: '#000',
     fontFamily: 'boldIBM',
-    fontSize: 30,
+    fontSize: 25,
     textAlign: 'left',
-    top: '2%',
+    top: '0%',
+    marginLeft: 25,
   },
   description: {
     color: '#6C6C6C',
@@ -27,6 +30,7 @@ const styles = StyleSheet.create({
     fontSize: 18,
     textAlign: 'left',
     top: '5%',
+    marginLeft: 20,
   },
   imgFinishArt: {
     width: 300,
@@ -34,22 +38,20 @@ const styles = StyleSheet.create({
     resizeMode: 'contain',
     top: '6%',
   },
-  buttonHelp: {
+
+  buttonBack: {
     flexDirection: 'row',
-    alignSelf: 'center',
-    bottom: '-20%',
+    bottom: '-35%',
+    marginLeft: '5%',
   },
-  textHelp: {
-    fontSize: 20,
+  textBack: {
+    fontSize: 18,
     fontFamily: 'boldIBM',
     color: '#000',
     textAlign: 'center',
+    marginLeft: 8,
   },
-  iconQuestion: {
-    alignSelf: 'center',
-    marginTop: 3,
-    marginLeft: 7,
-  },
+
 });
 
 export default styles;

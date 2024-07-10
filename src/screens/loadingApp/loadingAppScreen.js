@@ -1,10 +1,10 @@
 // Import React Components
 import React from 'react';
-import { SafeAreaView, Image, View, Text } from 'react-native';
+import { SafeAreaView, Image, View, Text, ActivityIndicator  } from 'react-native';
 import styles from './styles';
 
 // Import Images
-import Logo from '../../../assets/logoUnB.jpg';
+import Logo from '../../../assets/logoUnB.png';
 
 // Interface
 const LoadingAppScreen = () => {
@@ -15,6 +15,7 @@ const LoadingAppScreen = () => {
         <Text style={styles.textBy} testID='text-by'>BY</Text>
         <Text style={styles.textIbm} testID='text-ibm'>UnB</Text>
       </View>
+      <ActivityIndicator size="small" color="#00A896" /> 
     </SafeAreaView>
   );
 };
