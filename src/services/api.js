@@ -61,3 +61,14 @@ export const getCurrency = async (latitude, longitude) => {
     throw error;
   }
 };
+
+export const getUserByKey = async (key) => {
+  try {
+    const response = await axios.get(`${API_BASE_TRANSFERENCE_URL}/user_keys/${key}`);
+    console.log('User recebido:', response.data);
+    return response.data;
+  } catch (error) {
+    console.error('Erro ao obter moeda:', error);
+    throw error;
+  }
+};

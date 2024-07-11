@@ -31,6 +31,7 @@ const HomeScreen = ({ route, navigation }) => {
   const [showKeyModal, setShowKeyModal] = useState('');
   const [location, setLocation] = useState(null);
   const [currency, setCurrency] = useState('');
+  const [country_iso_2, setCountryISO2] = useState('');
 
   // Carregar dados ao montar o componente
   useEffect(() => {
@@ -74,8 +75,11 @@ const HomeScreen = ({ route, navigation }) => {
 
         try {
           // Obter moeda com base na latitude e longitude
+
           const currencyResponse = await getCurrency(latitude, longitude);
-          setCurrency(currencyResponse);
+          setCurrency(currencyResponse.currency);
+          setCountryISO2(currencyResponse.country_iso2);
+          console.log(country_iso_2);
         } catch (error) {
           console.error('Erro ao obter moeda:', error);
           Alert.alert('Erro', 'Não foi possível obter a moeda.');
@@ -153,8 +157,8 @@ const HomeScreen = ({ route, navigation }) => {
             <TouchableOpacity style={styles.modalCloseButton} onPress={() => toggleKeyModal()}>
               <Icon name="times" size={20} color="#000" />
             </TouchableOpacity>
-            {/* <Text style={styles.modalKeyTitle}>{selectedKey}</Text> */}
-            {/* <Text style={styles.modalKeyValue}>{selectedKey === 'CPF' ? '999.999.999-00' : 'matt@email.com'}</Text> */}
+            <Text style={styles.modalKeyTitle}>{selectedKey}</Text>
+            <Text style={styles.modalKeyValue}>{selectedKey === 'CPF' ? '999.999.999-00' : 'matt@email.com'}</Text>
             <TouchableOpacity style={styles.modalKeyAction} onPress={() => { /* Lógica para compartilhar chave */ }}>
               <Icon name="share-alt" size={20} color="#000" />
               <Text style={styles.modalKeyActionText}>Compartilhar chave</Text>
@@ -212,7 +216,7 @@ const HomeScreen = ({ route, navigation }) => {
             </View>
           </ScrollView>
           <View style={styles.buttons}>
-            <TouchableOpacity style={styles.pixBtn} onPress={() => navigation.navigate('SelectKeyScreen')}>
+            <TouchableOpacity style={styles.pixBtn} onPress={() => navigation.navigate('SelectKeyScreen', { country_iso_2 })}>
               <Image style={styles.pixLogo} source={iconPix} />
               <Text style={styles.pixText}>Transferir por Pix</Text>
             </TouchableOpacity>

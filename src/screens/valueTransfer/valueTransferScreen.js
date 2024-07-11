@@ -1,5 +1,5 @@
 // Import React Components
-import React, { useState, useContext } from 'react';
+import React, { useState, useContext, useEffect } from 'react';
 import { View, Text, TouchableOpacity, SafeAreaView,Image } from 'react-native';
 import Icon from 'react-native-vector-icons/FontAwesome5';
 import { TextInputMask } from 'react-native-masked-text';
@@ -9,7 +9,7 @@ import styles from './styles';
 import KeyboardAvoidingWrapper from '../../components/KeyboardWrapper';
 
 // Import API Back End
-import { paymentsApi } from '../../services/api';
+import { findUserById } from '../../services/api';
 
 // Import Context
 import { UserContext } from '../../context/userContext';
@@ -20,6 +20,21 @@ import logo from '../../../assets/logoTop.png';
 const ValueTransferScreen = ({ navigation }) => {
   const userContext = useContext(UserContext);
   const transactionContext = useContext(TransctionContext);
+  const [user, setUser] = useState(null);
+
+  useEffect(() => {
+    const fetchUserData = async () => {
+      try {
+        const user = await findUserById(userContext.id);
+        setUser(user);
+        console.log(user);
+      } catch (error) {
+        console.log(error);
+      }
+    }
+
+    fetchUserData();
+  }, []);
 
   const [value, onChangeText] = useState('');
   // const getEndToEndId = () => {
@@ -76,7 +91,7 @@ const ValueTransferScreen = ({ navigation }) => {
         <View style={styles.containerDestination}>
           <Text style={styles.titleDestination}>Você vai transferir para:</Text>
           <Text style={styles.nameDestination}>
-            Nome: 
+            Nome:
           </Text>
           <Text style={styles.cpfDestination}>
             CPF: 

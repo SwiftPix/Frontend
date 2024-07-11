@@ -8,6 +8,7 @@ import {
   TextInput,
   Image,
 } from 'react-native';
+import { useRoute } from '@react-navigation/native';
 import { TextInputMask } from 'react-native-masked-text';
 import Icon from 'react-native-vector-icons/FontAwesome5';
 import Accordion from 'react-native-accordion-wrapper';
@@ -21,7 +22,7 @@ import styles from './styles';
 import KeyboardAvoidingWrapper from '../../components/KeyboardWrapper';
 
 // Import API Back End
-import { keysApi } from '../../services/api';
+import { getUserByKey } from '../../services/api';
 
 // Import Transction Context
 import { TransctionContext } from '../../context/transactionContext';
@@ -33,28 +34,25 @@ const SelectKeyScreen = ({ navigation }) => {
   const [cpf, onChangeText] = useState('');
   const [cell, onChangeText1] = useState('');
   const [selectedCountry, setSelectedCountry] = useState('BR'); 
+  const route = useRoute();
+  const { country_iso_2 } = route.params;
 
-  const getKey = () => {
-    keysApi
-      .get(`/${cpf.replace('.', '').replace('.', '').replace('-', '')}`)
-      .then((res) => {
-        const data = res.data.chave_valid;
-        context.setTransaction((transaction) => ({
-          ...transaction,
-          key: data.key,
-          to: {
-            id: data.to.id,
-            name: data.to.name,
-            cpf: data.to.cpf,
-            institution: data.to.institution,
-            agency: data.to.agency,
-            account: data.to.account,
-          },
-        }));
-      })
-      .catch((err) => {
-        console.log(err);
-      });
+  const getKey = async () => {
+    const key = cpf.replace('.', '').replace('.', '').replace('-', '');
+    try {
+      const user_data = await getUserByKey(key);
+      context.setTransaction((transaction) => ({
+        ...transaction,
+        key: user_data.key,
+        to: {
+          id: user.user_id,
+          name: user.name,
+          cpf: user_data.key,
+        },
+      }));
+    } catch (error) {
+      console.log(error);
+    }
   };
 
   return (
@@ -118,18 +116,14 @@ const SelectKeyScreen = ({ navigation }) => {
               ]}
             />
           </View>
-          <Text style={styles.selectTitle}>Selecionar País onde você está:</Text>
           <CountryPicker
             containerButtonStyle={styles.selectCountry}
             translation="por"
-            placeholder={'Selecione o país de destino'}
-            filterProps={{
-              placeholder: 'Nome do país',
-            }}
-            withFilter
+            countryCodes={{country_iso_2}}
             onSelect={(country) => setSelectedCountry(country.cca2)}
             countryCode={selectedCountry} 
             withCountryNameButton
+            modalProps={{ visible: false }}
           />
         </View>
         <TouchableOpacity
