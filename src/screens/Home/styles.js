@@ -158,6 +158,89 @@ const styles = StyleSheet.create({
     marginBottom: 15,
     textAlign: 'center',
   },
+  modalContainer: {
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
+    backgroundColor: 'rgba(0,0,0,0.5)',
+  },
+  modalContent: {
+    width: '80%',
+    padding: 20,
+    backgroundColor: 'white',
+    borderRadius: 10,
+    alignItems: 'center',
+  },
+  modalCloseButton: {
+    alignSelf: 'flex-end',
+  },
+  modalTitle: {
+    fontSize: 20,
+    fontWeight: 'bold',
+    marginBottom: 20,
+  },
+  modalSubtitle: {
+    fontSize: 16,
+    color: 'gray',
+    marginBottom: 20,
+  },
+  modalButton: {
+    backgroundColor: '#00A896',
+    padding: 15,
+    borderRadius: 10,
+    marginBottom: 20,
+  },
+  modalButtonText: {
+    color: 'white',
+    fontSize: 16,
+  },
+  modalInfoContainer: {
+    width: '100%',
+    padding: 10,
+    backgroundColor: '#F0F0F0',
+    borderRadius: 10,
+    marginBottom: 20,
+  },
+  modalInfoText: {
+    fontSize: 16,
+    fontWeight: 'bold',
+  },
+  modalInfoDescription: {
+    fontSize: 14,
+    color: 'gray',
+  },
+  modalKeyItem: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'space-between',
+    width: '100%',
+    padding: 10,
+    borderBottomWidth: 1,
+    borderBottomColor: '#F0F0F0',
+  },
+  modalKeyText: {
+    fontSize: 16,
+  },
+  modalKeyValue: {
+    fontSize: 16,
+    color: 'gray',
+  },
+  modalKeyTitle: {
+    fontSize: 20,
+    fontWeight: 'bold',
+    marginBottom: 10,
+  },
+  modalKeyAction: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    padding: 10,
+    width: '100%',
+  },
+  modalKeyActionText: {
+    fontSize: 16,
+    marginLeft: 10,
+  }
+
 });
 
 export default styles;

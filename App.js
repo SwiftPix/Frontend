@@ -28,7 +28,7 @@ import ValueTransferScreen from './src/screens/valueTransfer/valueTransferScreen
 import DataReviewScreen from './src/screens/dataReview/dataReviewScreen';
 import ReceiptScreen from './src/screens/Receipt/ReceiptScreen';
 import ExpensesScreen from './src/screens/expenses/expensesScreen';
-
+import ManageKeysScreen from './src/screens/manageKeys/ManageKeysScreen'; 
 
 // Context imports
 import UserProvider from './src/context/userContext';
@@ -124,6 +124,10 @@ const App = () => {
             <AppStack.Screen
               name="AddExpenseScreen"
               component={AddExpenseScreen}
+            />
+            <AppStack.Screen
+              name="ManageKeysScreen" // Adicionar a nova tela
+              component={ManageKeysScreen}
             />
 
           </AppStack.Navigator>

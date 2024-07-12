@@ -3,37 +3,28 @@ import {
   SafeAreaView,
   View,
   Text,
-  Image,
   TouchableOpacity,
   ScrollView,
   Alert,
   Modal,
-  Button,
 } from 'react-native';
 import Icon from 'react-native-vector-icons/FontAwesome5';
 import * as Location from 'expo-location';
-import { findUserById, getBalance, getExpenses, getCurrency } from '../../services/api'; // Importar funções do API
+import { findUserById, getBalance, getExpenses, getCurrency } from '../../services/api';
 import styles from './styles';
 
-import iconNotification from '../../../assets/notification.png';
-import iconSettings from '../../../assets/settings.png';
-import iconUser from '../../../assets/user.png';
-import iconPix from '../../../assets/pix.png';
-
 const HomeScreen = ({ route, navigation }) => {
-  const { userId } = route.params; // Obter userId das props de navegação
+  const { userId } = route.params;
   const [user, setUser] = useState(null);
   const [balance, setBalance] = useState('');
   const [transactions, setTransactions] = useState([]);
   const [showModal, setShowModal] = useState(false);
   const [showBalance, setShowBalance] = useState(false);
-  const [selectedKey, setSelectedKey] = useState('');
-  const [showKeyModal, setShowKeyModal] = useState('');
   const [location, setLocation] = useState(null);
   const [currency, setCurrency] = useState('');
-  const [country_iso_2, setCountryISO2] = useState('');
+  const [countryISO2, setCountryISO2] = useState('');
+  const [showNotifications, setShowNotifications] = useState(false);
 
-  // Carregar dados ao montar o componente
   useEffect(() => {
     const fetchUserData = async () => {
       try {
@@ -43,8 +34,8 @@ const HomeScreen = ({ route, navigation }) => {
         const balanceResponse = await getBalance(userId);
         setBalance(balanceResponse.balance);
 
-        const transactionsResponse = await getExpenses(userId);
-        setTransactions(transactionsResponse);
+        // const transactionsResponse = await getExpenses(userId);
+        // setTransactions(transactionsResponse);
       } catch (error) {
         console.error('Failed to load user data:', error);
         Alert.alert('Erro', 'Não foi possível carregar os dados do usuário.');
@@ -61,25 +52,20 @@ const HomeScreen = ({ route, navigation }) => {
   useEffect(() => {
     const requestLocationPermission = async () => {
       try {
-        // Solicitar permissão para localização
         let { status } = await Location.requestForegroundPermissionsAsync();
         if (status !== 'granted') {
           Alert.alert('Permissão de localização negada');
           return;
         }
 
-        // Obter localização atual
         let location = await Location.getCurrentPositionAsync({});
         const { latitude, longitude } = location.coords;
         setLocation({ latitude, longitude });
 
         try {
-          // Obter moeda com base na latitude e longitude
-
           const currencyResponse = await getCurrency(latitude, longitude);
           setCurrency(currencyResponse.currency);
           setCountryISO2(currencyResponse.country_iso2);
-          console.log(country_iso_2);
         } catch (error) {
           console.error('Erro ao obter moeda:', error);
           Alert.alert('Erro', 'Não foi possível obter a moeda.');
@@ -97,13 +83,12 @@ const HomeScreen = ({ route, navigation }) => {
     setShowModal(!showModal);
   };
 
-  const toggleKeyModal = (key = null) => {
-    setSelectedKey(key);
-    setShowKeyModal(!showKeyModal);
-  };
-
   const toggleBalanceVisibility = () => {
     setShowBalance(!showBalance);
+  };
+
+  const toggleNotifications = () => {
+    setShowNotifications(!showNotifications);
   };
 
   return (
@@ -111,82 +96,36 @@ const HomeScreen = ({ route, navigation }) => {
       <Modal
         animationType="slide"
         transparent={true}
-        visible={showModal}
-        onRequestClose={toggleModal}>
+        visible={showNotifications}
+        onRequestClose={toggleNotifications}>
         <View style={styles.modalContainer}>
           <View style={styles.modalContent}>
-            <TouchableOpacity style={styles.modalCloseButton} onPress={toggleModal}>
+            <TouchableOpacity style={styles.modalCloseButton} onPress={toggleNotifications}>
               <Icon name="times" size={20} color="#000" />
             </TouchableOpacity>
-            <Text style={styles.modalTitle}>Minhas chaves</Text>
-            <Text style={styles.modalSubtitle}>Gerencie suas chaves para receber transferências pelo PIX.</Text>
-            <TouchableOpacity style={styles.modalButton} onPress={() => { /* Lógica para registrar chave PIX */ }}>
-              <Text style={styles.modalButtonText}>Registrar chave PIX</Text>
-            </TouchableOpacity>
-            <View style={styles.modalInfoContainer}>
-              <Text style={styles.modalInfoText}>2 de 5 chaves</Text>
-              <Text style={styles.modalInfoDescription}>Você pode criar até 5 chaves PIX de até 4 tipos diferentes.</Text>
-            </View>
-            <View style={styles.modalKeyItem}>
-              <Icon name="id-card" size={20} color='#000' />
-              <Text style={styles.modalKeyText}>CPF</Text>
-              <Text style={styles.modalKeyValue}>999.999.999-00</Text>
-              <TouchableOpacity onPress={() => toggleKeyModal('CPF')}>
-                <Icon name="ellipsis-v" size={20} color="#000" />
-              </TouchableOpacity>
-            </View>
-            <View style={styles.modalKeyItem}>
-              <Icon name="envelope" size={20} color='#000' />
-              <Text style={styles.modalKeyText}>E-mail</Text>
-              <Text style={styles.modalKeyValue}>matt@email.com</Text>
-              <TouchableOpacity onPress={() => toggleKeyModal('E-mail')}>
-                <Icon name="ellipsis-v" size={20} color="#000" />
-              </TouchableOpacity>
-            </View>
+            <Text style={styles.modalTitle}>Últimas notificações</Text>
+            <Text style={styles.notificationText}>- Trasnferência realizada</Text>
+            <Text style={styles.notificationText}>- Trasnferência recebida</Text>
           </View>
         </View>
       </Modal>
-
-      <Modal
-        animationType="slide"
-        transparent={true}
-        visible={showKeyModal}
-        onRequestClose={() => toggleKeyModal()}>
-        <View style={styles.modalContainer}>
-          <View style={styles.modalContent}>
-            <TouchableOpacity style={styles.modalCloseButton} onPress={() => toggleKeyModal()}>
-              <Icon name="times" size={20} color="#000" />
-            </TouchableOpacity>
-            <Text style={styles.modalKeyTitle}>{selectedKey}</Text>
-            <Text style={styles.modalKeyValue}>{selectedKey === 'CPF' ? '999.999.999-00' : 'matt@email.com'}</Text>
-            <TouchableOpacity style={styles.modalKeyAction} onPress={() => { /* Lógica para compartilhar chave */ }}>
-              <Icon name="share-alt" size={20} color="#000" />
-              <Text style={styles.modalKeyActionText}>Compartilhar chave</Text>
-            </TouchableOpacity>
-            <TouchableOpacity style={styles.modalKeyAction} onPress={() => { /* Lógica para excluir chave */ }}>
-              <Icon name="trash" size={20} color="red" />
-              <Text style={styles.modalKeyActionText}>Excluir chave</Text>
-            </TouchableOpacity>
-          </View>
-        </View>
-      </Modal>
-
+      
       {user && (
         <>
           <View style={styles.header}>
             <TouchableOpacity>
-              <Image style={styles.iconHeader} source={iconUser} />
+              <Icon name="user" size={20} color="#fff" />
             </TouchableOpacity>
             <Text style={styles.headerText}>Olá, {user.name}!</Text>
             <View style={styles.headerIcons}>
-              <TouchableOpacity onPress={() => navigation.navigate('ExpensesScreen') }>
+              <TouchableOpacity onPress={() => navigation.navigate('ExpensesScreen')}>
                 <Icon name="coins" size={20} color='#fff' style={styles.iconHeader} />
               </TouchableOpacity>
-              <TouchableOpacity onPress={toggleModal}>
+              <TouchableOpacity onPress={() => navigation.navigate('ManageKeysScreen', { userId })}>
                 <Icon name="key" size={20} color='#fff' style={styles.iconHeader} />
               </TouchableOpacity>
-              <TouchableOpacity>
-                <Image style={styles.iconHeader} source={iconNotification} />
+              <TouchableOpacity onPress={toggleNotifications}>
+                <Icon name="bell" size={20} color='#fff' style={styles.iconHeader} />
               </TouchableOpacity>
             </View>
           </View>
@@ -216,10 +155,10 @@ const HomeScreen = ({ route, navigation }) => {
             </View>
           </ScrollView>
           <View style={styles.buttons}>
-            <TouchableOpacity style={styles.pixBtn} onPress={() => navigation.navigate('SelectKeyScreen', { country_iso_2 })}>
-              <Image style={styles.pixLogo} source={iconPix} />
-              <Text style={styles.pixText}>Transferir por Pix</Text>
-            </TouchableOpacity>
+          <TouchableOpacity style={styles.pixBtn} onPress={() => navigation.navigate('SelectKeyScreen', { userId, country_iso_2: countryISO2 })}>
+        <Icon name="exchange-alt" size={20} color="#fff" style={styles.pixLogo} />
+        <Text style={styles.pixText}>Transferir por Pix</Text>
+      </TouchableOpacity>
           </View>
         </>
       )}

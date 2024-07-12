@@ -62,13 +62,59 @@ export const getCurrency = async (latitude, longitude) => {
   }
 };
 
+export const checkKeyExists = async (key) => {
+  try {
+    const response = await axios.get(`${API_BASE_TRANSFERENCE_URL}/user_keys/${key}`);
+    console.log('Chave verificada:', response.data);
+    return !!response.data;
+  } catch (error) {
+    console.error('Erro ao verificar chave PIX:', error);
+    throw error;
+  }
+};
+
+export const showUserKeys = async (userId) => { 
+  try {
+    const response = await axios.get(`${API_BASE_TRANSFERENCE_URL}/my_keys/${userId}`);
+    console.log('Chaves do usuário recebidas:', response.data);
+    return response.data;
+  } catch (error) {
+    console.error('Erro ao encontrar chaves PIX:', error);
+    throw error;
+  }
+};
+
+export const createPixKey = async (keyData) => {
+  try {
+    console.log('Enviando dados para criar chave PIX:', keyData); 
+    const response = await axios.post(`${API_BASE_TRANSFERENCE_URL}/create_key`, keyData);
+    console.log('Chave PIX criada:', response.data);
+    return response.data;
+  } catch (error) {
+    console.error('Erro ao criar chave PIX:', error);
+    throw error;
+  }
+};
+
 export const getUserByKey = async (key) => {
   try {
     const response = await axios.get(`${API_BASE_TRANSFERENCE_URL}/user_keys/${key}`);
     console.log('User recebido:', response.data);
     return response.data;
   } catch (error) {
-    console.error('Erro ao obter moeda:', error);
+    console.error('Erro ao obter chave PIX:', error);
+    throw error;
+  }
+};
+
+export const createTransference = async (transferenceData) => {
+  try {
+    console.log('Enviando dados para criar transferência:', transferenceData);
+    const response = await axios.post(`${API_BASE_TRANSFERENCE_URL}/transference`, transferenceData);
+    console.log('Resposta recebida da transferência:', response.data);
+    return response.data;
+  } catch (error) {
+    console.error('Erro ao criar transferência:', error);
     throw error;
   }
 };
