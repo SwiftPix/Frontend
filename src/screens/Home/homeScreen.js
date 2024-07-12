@@ -33,10 +33,10 @@ const HomeScreen = ({ route, navigation }) => {
       setUser(userResponse);
 
       const balanceResponse = await getBalance(userId);
-      setBalance(balanceResponse.balance.toFixed(2)); // Set balance with 2 decimal places
+      setBalance(balanceResponse.balance.toFixed(2)); 
 
-      const transactionsResponse = await getExpenses(userId);
-      setTransactions(transactionsResponse);
+      // const transactionsResponse = await getExpenses(userId);
+      // setTransactions(transactionsResponse);
     } catch (error) {
       console.error('Failed to load user data:', error);
       Alert.alert('Erro', 'Não foi possível carregar os dados do usuário.');
@@ -109,8 +109,8 @@ const HomeScreen = ({ route, navigation }) => {
               <Icon name="times" size={20} color="#000" />
             </TouchableOpacity>
             <Text style={styles.modalTitle}>Últimas notificações</Text>
-            <Text style={styles.notificationText}>- Transferência realizada</Text>
-            <Text style={styles.notificationText}>- Transferência recebida</Text>
+            <Text style={styles.notificationText}>- Transferência realizada 
+            </Text>
           </View>
         </View>
       </Modal>
