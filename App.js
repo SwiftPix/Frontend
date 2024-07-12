@@ -27,11 +27,13 @@ import StatementScreen from './src/screens/statement/statementScreen';
 import ValueTransferScreen from './src/screens/valueTransfer/valueTransferScreen';
 import DataReviewScreen from './src/screens/dataReview/dataReviewScreen';
 import ReceiptScreen from './src/screens/Receipt/ReceiptScreen';
-
+import ExpensesScreen from './src/screens/expenses/expensesScreen';
+import ManageKeysScreen from './src/screens/manageKeys/ManageKeysScreen'; 
 
 // Context imports
 import UserProvider from './src/context/userContext';
 import TransctionProvider from './src/context/transactionContext';
+import AddExpenseScreen from './src/components/addExpense/addExpense';
 
 const AppStack = createStackNavigator();
 
@@ -54,8 +56,7 @@ const App = () => {
               headerTransparent: true,
               title: null
             }}
-          >
-            
+          > 
             <AppStack.Screen
               name="Onboarding"
               component={OnboardingScreen}
@@ -116,8 +117,19 @@ const App = () => {
               name="StatementScreen"
               component={StatementScreen}
             />
-          
-         
+            <AppStack.Screen
+              name="ExpensesScreen"
+              component={ExpensesScreen}
+            />
+            <AppStack.Screen
+              name="AddExpenseScreen"
+              component={AddExpenseScreen}
+            />
+            <AppStack.Screen
+              name="ManageKeysScreen" // Adicionar a nova tela
+              component={ManageKeysScreen}
+            />
+
           </AppStack.Navigator>
     </NavigationContainer>
   );

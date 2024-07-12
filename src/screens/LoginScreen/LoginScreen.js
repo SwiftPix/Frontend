@@ -14,11 +14,15 @@ const LoginScreen = ({ navigation }) => {
   const handleLogin = async () => {
     try {
       const response = await loginUser({ cpf, password });
-      console.log('Login bem-sucedido:', response);
-      navigation.navigate('HomeScreen');
+      if (response.user) { // Ajuste para pegar o campo "user"
+        console.log('Login bem-sucedido:', response);
+        navigation.navigate('HomeScreen', { userId: response.user });
+      } else {
+        throw new Error('User ID não encontrado na resposta');
+      }
     } catch (error) {
       console.error('Erro ao fazer login:', error);
-      Alert.alert('Erro', error.error || 'Não foi possível fazer login. Tente novamente.');
+      Alert.alert('Erro', error.message || 'Não foi possível fazer login. Tente novamente.');
     }
   };
 
