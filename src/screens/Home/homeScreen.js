@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useCallback } from 'react';
 import {
   SafeAreaView,
   View,
@@ -11,6 +11,7 @@ import {
 import Icon from 'react-native-vector-icons/FontAwesome5';
 import * as Location from 'expo-location';
 import { findUserById, getBalance, getExpenses, getCurrency } from '../../services/api';
+import { useFocusEffect } from '@react-navigation/native';
 import styles from './styles';
 
 const HomeScreen = ({ route, navigation }) => {
@@ -24,30 +25,29 @@ const HomeScreen = ({ route, navigation }) => {
   const [currency, setCurrency] = useState('');
   const [countryISO2, setCountryISO2] = useState('');
   const [showNotifications, setShowNotifications] = useState(false);
+  const [selectedTransaction, setSelectedTransaction] = useState(null);
 
-  useEffect(() => {
-    const fetchUserData = async () => {
-      try {
-        const userResponse = await findUserById(userId);
-        setUser(userResponse);
+  const fetchUserData = async () => {
+    try {
+      const userResponse = await findUserById(userId);
+      setUser(userResponse);
 
-        const balanceResponse = await getBalance(userId);
-        setBalance(balanceResponse.balance);
+      const balanceResponse = await getBalance(userId);
+      setBalance(balanceResponse.balance.toFixed(2)); // Set balance with 2 decimal places
 
-        // const transactionsResponse = await getExpenses(userId);
-        // setTransactions(transactionsResponse);
-      } catch (error) {
-        console.error('Failed to load user data:', error);
-        Alert.alert('Erro', 'Não foi possível carregar os dados do usuário.');
-      }
-    };
-
-    if (userId) {
-      fetchUserData();
-    } else {
-      console.error('User ID não encontrado nas props de navegação');
+      const transactionsResponse = await getExpenses(userId);
+      setTransactions(transactionsResponse);
+    } catch (error) {
+      console.error('Failed to load user data:', error);
+      Alert.alert('Erro', 'Não foi possível carregar os dados do usuário.');
     }
-  }, [userId]);
+  };
+
+  useFocusEffect(
+    useCallback(() => {
+      fetchUserData();
+    }, [userId])
+  );
 
   useEffect(() => {
     const requestLocationPermission = async () => {
@@ -91,6 +91,11 @@ const HomeScreen = ({ route, navigation }) => {
     setShowNotifications(!showNotifications);
   };
 
+  const openTransactionDetails = (transaction) => {
+    setSelectedTransaction(transaction);
+    toggleModal();
+  };
+
   return (
     <SafeAreaView style={styles.container}>
       <Modal
@@ -104,12 +109,35 @@ const HomeScreen = ({ route, navigation }) => {
               <Icon name="times" size={20} color="#000" />
             </TouchableOpacity>
             <Text style={styles.modalTitle}>Últimas notificações</Text>
-            <Text style={styles.notificationText}>- Trasnferência realizada</Text>
-            <Text style={styles.notificationText}>- Trasnferência recebida</Text>
+            <Text style={styles.notificationText}>- Transferência realizada</Text>
+            <Text style={styles.notificationText}>- Transferência recebida</Text>
           </View>
         </View>
       </Modal>
-      
+
+      <Modal
+        animationType="slide"
+        transparent={true}
+        visible={showModal}
+        onRequestClose={toggleModal}>
+        <View style={styles.modalContainer}>
+          <View style={styles.modalContent}>
+            <TouchableOpacity style={styles.modalCloseButton} onPress={toggleModal}>
+              <Icon name="times" size={20} color="#000" />
+            </TouchableOpacity>
+            {selectedTransaction && (
+              <>
+                <Text style={styles.modalTitle}>Detalhes da Transação</Text>
+                <Text>Data: {new Date(selectedTransaction.date).toLocaleDateString()}</Text>
+                <Text>De: {selectedTransaction.from.name} ({selectedTransaction.from.cpf})</Text>
+                <Text>Para: {selectedTransaction.to.name} ({selectedTransaction.to.cpf})</Text>
+                <Text>Valor: R$ {selectedTransaction.value.toFixed(2)}</Text>
+              </>
+            )}
+          </View>
+        </View>
+      </Modal>
+
       {user && (
         <>
           <View style={styles.header}>
@@ -138,27 +166,30 @@ const HomeScreen = ({ route, navigation }) => {
                 </TouchableOpacity>
               </View>
               {showBalance ? (
-                <Text style={styles.balance}>R$ {balance},00</Text>
+                <Text style={styles.balance}>R$ {balance}</Text>
               ) : (
                 <Text style={styles.balance}>***</Text>
               )}
               {transactions.length > 0 ? (
                 transactions.map((transaction, index) => (
-                  <View style={styles.transactionItem} key={index}>
-                    <Text>{transaction.reason} - R$ {transaction.value}</Text>
+                  <TouchableOpacity
+                    key={index}
+                    onPress={() => openTransactionDetails(transaction)}
+                    style={styles.transactionItem}>
+                    <Text>{transaction.reason} - R$ {transaction.value.toFixed(2)}</Text>
                     <Text>{new Date(transaction.date).toLocaleDateString()}</Text>
-                  </View>
+                  </TouchableOpacity>
                 ))
               ) : (
-                <Text>Sem transações recentes</Text>
+                <Text></Text>
               )}
             </View>
           </ScrollView>
           <View style={styles.buttons}>
-          <TouchableOpacity style={styles.pixBtn} onPress={() => navigation.navigate('SelectKeyScreen', { userId, country_iso_2: countryISO2 })}>
-        <Icon name="exchange-alt" size={20} color="#fff" style={styles.pixLogo} />
-        <Text style={styles.pixText}>Transferir por Pix</Text>
-      </TouchableOpacity>
+            <TouchableOpacity style={styles.pixBtn} onPress={() => navigation.navigate('SelectKeyScreen', { userId, country_iso_2: countryISO2 })}>
+              <Icon name="exchange-alt" size={20} color="#fff" style={styles.pixLogo} />
+              <Text style={styles.pixText}>Transferir por Pix</Text>
+            </TouchableOpacity>
           </View>
         </>
       )}

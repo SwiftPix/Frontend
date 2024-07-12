@@ -78,33 +78,33 @@ const SelectKeyScreen = ({ navigation }) => {
 
   const handleTransference = async () => {
     const key = cpf || cell || email || aleatoria;
-
+  
     if (!key || !value || !userId || !currency) {
       Alert.alert('Erro', 'Por favor, preencha todos os campos.');
       return;
     }
-
+  
     const parsedValue = parseFloat(value).toFixed(1);
-
+  
     const transferenceData = {
       sender_id: userId,
       receiver_key: key,
       currency: currency,
-      value:  parsedValue,
+      value: parsedValue,
     };
-
+  
     try {
       console.log('Enviando dados para criar transferência:', transferenceData);
       const user_data = await getUserByKey(key);
       console.log('Chave verificada:', user_data);
-
+  
       if (scheduledDate) {
         transferenceData.scheduled_date = scheduledDate;
       }
-
-      await createTransference(transferenceData);
+  
+      const response = await createTransference(transferenceData);
       Alert.alert('Sucesso', 'Transferência realizada com sucesso!');
-      navigation.navigate('ReceiptScreen');
+      navigation.navigate('ReceiptScreen', { transferData: response });
     } catch (error) {
       console.error('Erro ao registrar chave:', error);
       Alert.alert('Erro', 'Não foi possível registrar a chave.');
